@@ -50,7 +50,7 @@ $V_{coop} = \sum_{t=0}^{\infty} \delta^t R > V_{betray} = T + \sum_{t=1}^{\infty
 
 1. 本リポジトリをクローン。
 
-2. `main.py` を実行。
+2. `rice.py` を実行。
 
 3. PythonがバックグラウンドでMaximaを呼び出し、計算結果をファイル経由で回収。
 
