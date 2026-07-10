@@ -1,0 +1,54 @@
+BH-002: Black Hole Dynamic Analysis - Summary
+============================================================
+
+1. DATA OVERVIEW:
+   Number of data points: 20
+   Mass range: 1.00e+10 kg to 1.00e+31 kg
+
+2. PROPERTIES OF REPRESENTATIVE BLACK HOLES:
+
+   1 kg (1.00e+00 kg):
+     Schwarzschild radius: 1.49e-17 m
+     Surface gravity: 3.03e+33 m/s²
+     Hawking temperature: 1.23e+13 K
+     Hawking radiation: 3.56e+12 W
+     Evaporation time: 2.67e+06 years
+     Extractable energy: 2.61e+26 J
+
+   Human (70 kg) (7.00e+01 kg):
+     Schwarzschild radius: 1.49e-17 m
+     Surface gravity: 3.03e+33 m/s²
+     Hawking temperature: 1.23e+13 K
+     Hawking radiation: 3.56e+12 W
+     Evaporation time: 2.67e+06 years
+     Extractable energy: 2.61e+26 J
+
+   Earth (5.97e+24 kg):
+     Schwarzschild radius: 3.47e-03 m
+     Surface gravity: 1.30e+19 m/s²
+     Hawking temperature: 5.25e-02 K
+     Hawking radiation: 6.53e-17 W
+     Evaporation time: 3.40e+49 years
+     Extractable energy: 6.09e+40 J
+
+   Sun (1.99e+30 kg):
+     Schwarzschild radius: 1.17e+03 m
+     Surface gravity: 3.86e+13 m/s²
+     Hawking temperature: 1.56e-07 K
+     Hawking radiation: 5.78e-28 W
+     Evaporation time: 1.29e+66 years
+     Extractable energy: 2.05e+46 J
+
+3. PENROSE PROCESS EFFICIENCY:
+   Spin parameter a = 0.000: efficiency η = 0.000%
+   Spin parameter a = 0.500: efficiency η = 3.407%
+   Spin parameter a = 0.900: efficiency η = 15.268%
+   Spin parameter a = 0.990: efficiency η = 24.466%
+   Spin parameter a = 0.999: efficiency η = 27.726%
+
+4. GENERATED FILES:
+   - BH002_all_properties.png: All properties subplots
+   - BH002_penrose_process.png: Penrose process details
+   - BH002_practical_comparison.png: Practical comparisons
+   - BH002_detailed_results.csv: Detailed calculation results
+   - BH002_summary.txt: This summary file

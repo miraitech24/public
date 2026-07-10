@@ -1,0 +1,34 @@
+ZS-003 Results: Arrival in 0 seconds analysis
+=============================================
+
+Physical constants:
+  Speed of light: c = 2.99792458E+8 m/s
+
+Time dilation factors:
+  v = 0.1c: γ = 1.005037815259212
+  v = 0.5c: γ = 1.1547005383792517
+  v = 0.9c: γ = 2.294157338705617
+  v = 0.99c: γ = 7.088812050083374
+  v = 0.999c: γ = 22.36627204212937
+
+4.2 light year trip analysis:
+  Distance: 3.97362E+16 m = 4.2 light years
+  At v=0.999c:
+    Coordinate time: 1.326783743704986E+8 s = 4.204323978074967 years
+    Proper time: 5.932073709940756E+6 s = 0.18797607263989517 years
+    Time dilation: 22.366272042129375
+
+Proper time trend as v→c:
+  v = 0.9c: τ = 6.419481047204291E+7 s, γ = 2.294157338705617
+  v = 0.99c: τ = 1.8886738774327604E+7 s, γ = 7.088812050083374
+  v = 0.999c: τ = 5.932073709940756E+6 s, γ = 22.36627204212937
+  v = 0.9999c: τ = 1.8746198085345939E+6 s, γ = 70.71244595187527
+  v = 0.99999c: τ = 5.927668185020123E+5 s, γ = 223.6073567702454
+
+Frame synchronization offsets:
+  v = 0.5c: offset = 5.739396994746814E+7 s (1.818705159691109 years)
+  v = 0.9c: offset = 5.199779648235475E+7 s (1.647710741068863 years)
+  v = 0.99c: offset = 1.8510892672718489E+7 s (0.5865747925291684 years)
+
+Key conclusions:
+1. Time dilation increases rapidly as v approaches c

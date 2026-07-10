@@ -1,0 +1,2474 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>ZS001</title>
+  <meta name="generator" content="wxMaxima">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  // A comment that hinders wxWidgets from optimizing this tag too much.
+</script>
+  <link rel="stylesheet" type="text/css" href="ZS001_htmlimg/ZS001.css">
+ </head>
+ <body>
+
+<!-- ****************************************************** -->
+<!-- *        Created with wxMaxima version 26.01.0       * -->
+<!-- ****************************************************** -->
+<noscript><div class="error message"><p>Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</p></div></noscript><p hidden = "hidden">\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)</p>
+
+<!-- Text cell -->
+
+
+<div class="comment">
+========================================================<br>ZS-001: 時空歪みに必要なエネルギー密度 (Maxima)<br>目的: アルクビエレ駆動のエネルギー要件を現実物質で評価<br>========================================================
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 1. 物理定数 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i4)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">G</span><span class="code_operator">:</span> <span class="code_number">6</span><span class="code_endofline">.</span><span class="code_number">67430e-11</span><span class="code_endofline">;</span>        <span class="code_comment">/* 重力定数 [m^3 kg^-1 s^-2] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">c</span><span class="code_operator">:</span> <span class="code_number">299792458</span><span class="code_endofline">;</span>          <span class="code_comment">/* 光速 [m/s] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">hbar</span><span class="code_operator">:</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">054571817e-34</span><span class="code_endofline">;</span> <span class="code_comment">/* 換算プランク定数 [J·s] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">pi</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">%pi</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{G} 6.6743 {{10}^{-11}}\]
+</p>
+<p>
+\[\]\[\tag{c} 299792458\]
+</p>
+<p>
+\[\]\[\tag{hbar} 1.054571817 {{10}^{-34}}\]
+</p>
+<p>
+\[\]\[\tag{pi} 3.141592653589793\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 2. アルクビエレ計量 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i5)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o5} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i6)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o6} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i7)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;ZS‑001: 時空歪みに必要なエネルギー密度&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"ZS‑001: 時空歪みに必要なエネルギー密度"\]
+</p>
+<p>
+\[\]\[\tag{%o7} "ZS‑001: 時空歪みに必要なエネルギー密度"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i8)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o8} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i9)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o9} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i10)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;アルクビエレ計量 (1994年):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[アルクビエレ計量 (1994年):\]
+</p>
+<p>
+\[\]\[\tag{%o10} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i11)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ds² = -c²dt² + [dx - v_s f(r_s) dt]² + dy² + dz²~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  ds\textasciicircum2 = -c\textasciicircum2dt\textasciicircum2 + [dx - v\_ s f(r\_ s) dt]\textasciicircum2 + dy\textasciicircum2 + dz\textasciicircum2\]
+</p>
+<p>
+\[\]\[\tag{%o11} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i12)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ここで v_s はワープ速度, f(r_s) は形状関数~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  ここで v\_ s はワープ速度, f(r\_ s) は形状関数\]
+</p>
+<p>
+\[\]\[\tag{%o12} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 3. 必要な負のエネルギー密度 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i13)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o13} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i14)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o14} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i15)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;3. 必要な負のエネルギー密度の計算&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"3. 必要な負のエネルギー密度の計算"\]
+</p>
+<p>
+\[\]\[\tag{%o15} "3. 必要な負のエネルギー密度の計算"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i16)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o16} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+3.1 アルクビエレの原論文の結果
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+必要な負のエネルギー: E ≈ -M v_s² R² / G
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+ここで M は船の質量, R はワープバブルの半径, v_s はワープ速度
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i20)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">M_ship</span><span class="code_operator">:</span> <span class="code_number">1000</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">;</span>  <span class="code_comment">/* 宇宙船の質量 [kg] (1トン) */</span><span class="code_endofline"><br>
+</span><span class="code_variable">R_bubble</span><span class="code_operator">:</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">;</span>  <span class="code_comment">/* ワープバブルの半径 [m] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">v_warp_list</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">2</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">5</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span><span class="code_endofline">;</span>  <span class="code_comment">/* ワープ速度 (c単位) */</span><span class="code_endofline"><br>
+</span><span class="code_endofline"><br>
+</span><span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{M\_ ship} 1000.0\]
+</p>
+<p>
+\[\]\[\tag{R\_ bubble} 10.0\]
+</p>
+<p>
+\[\]\[\tag{v\_ warp\_ list} \left[ 0.1\mathop{,}0.5\mathop{,}1.0\mathop{,}2.0\mathop{,}5.0\mathop{,}10.0\right] \]\[\]
+</p>
+<p>
+\[\]\[\tag{%o20} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i21)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;3.1 アルクビエレの原論文に基づく計算:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[3.1 アルクビエレの原論文に基づく計算:\]
+</p>
+<p>
+\[\]\[\tag{%o21} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i22)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  宇宙船質量: M = ~f kg (1トン)~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">M_ship</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  宇宙船質量: M = 1000.0 kg (1トン)\]
+</p>
+<p>
+\[\]\[\tag{%o22} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i23)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ワープバブル半径: R = ~f m~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">R_bubble</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  ワープバブル半径: R = 10.0 m\]
+</p>
+<p>
+\[\]\[\tag{%o23} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i24)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_variable">v_warp_list</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">E_alcubiere</span><span class="code_operator">:</span> <span class="code_operator">−</span><span class="code_variable">M_ship</span> <span class="code_operator">·</span> <span class="code_variable">v</span><span class="code_operator">^</span><span class="code_number">2</span> <span class="code_operator">·</span> <span class="code_variable">R_bubble</span><span class="code_operator">^</span><span class="code_number">2</span> <span class="code_operator">/</span> <span class="code_variable">G</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~f c: E ≈ ~e J~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">E_alcubiere</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.1 c: E ≈ -1.3465909215001087e+30 J
+\]\[  v = 0.5 c: E ≈ -3.3664773037502727e+31 J
+\]\[  v = 1.0 c: E ≈ -1.346590921500109e+32 J
+\]\[  v = 2.0 c: E ≈ -5.386363686000436e+32 J
+\]\[  v = 5.0 c: E ≈ -3.3664773037502727e+33 J
+\]\[  v = 10.0 c: E ≈ -1.346590921500109e+34 J\]
+</p>
+<p>
+\[\]\[\tag{%o24} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+3.2 負のエネルギー密度の計算
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i25)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">v</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_comment">/* エネルギー密度: ρ ≈ -v²/(8πG R²) */</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">−</span><span class="code_variable">v</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">8</span><span class="code_operator">·</span><span class="code_variable">%pi</span><span class="code_operator">·</span><span class="code_variable">G</span><span class="code_operator">·</span><span class="code_variable">R</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o25} \mathop{rho\_ alcubiere}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{:=}\mathop{block}\left( [v]\mathop{,}v\mathop{:}{v_{\ensuremath{\mathrm{frac}}}} c\mathop{,}\frac{\mathop{-}{{v}^{2}}}{8 \ensuremath{\pi}  G {{R}^{2}}}\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i26)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o26} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i27)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;3.2 必要な負のエネルギー密度:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[3.2 必要な負のエネルギー密度:\]
+</p>
+<p>
+\[\]\[\tag{%o27} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i28)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  半径 R = 10m のワープバブル:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  半径 R = 10m のワープバブル:\]
+</p>
+<p>
+\[\]\[\tag{%o28} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i29)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">2</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho_val</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~f c: ρ ≈ ~e J/m³~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">rho_val</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.1 c: \rho  ≈ -5.357915036985319e+21 J/m\textasciicircum3
+\]\[  v = 0.5 c: \rho  ≈ -1.3394787592463298e+23 J/m\textasciicircum3
+\]\[  v = 1.0 c: \rho  ≈ -5.357915036985318e+23 J/m\textasciicircum3
+\]\[  v = 2.0 c: \rho  ≈ -2.1431660147941273e+24 J/m\textasciicircum3\]
+</p>
+<p>
+\[\]\[\tag{%o29} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 4. カシミール効果との比較 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i30)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o30} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i31)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o31} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i32)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;4. カシミール効果との比較&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"4. カシミール効果との比較"\]
+</p>
+<p>
+\[\]\[\tag{%o32} "4. カシミール効果との比較"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i33)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o33} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+カシミールエネルギー密度
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i34)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">rho_casimir</span><span class="code_operator">(</span><span class="code_variable">d</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_operator">−</span><span class="code_variable">%pi</span><span class="code_operator">^</span><span class="code_number">2</span> <span class="code_operator">·</span> <span class="code_variable">hbar</span> <span class="code_operator">·</span> <span class="code_variable">c</span> <span class="code_operator">/</span> <span class="code_operator">(</span><span class="code_number">240</span> <span class="code_operator">·</span> <span class="code_variable">d</span><span class="code_operator">^</span><span class="code_number">4</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o34} \mathop{rho\_ casimir}(d)\mathop{:=}\frac{\mathop{-}{{\ensuremath{\pi} }^{2}} \ensuremath{\mathrm{hbar}} c}{240 {{d}^{4}}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i35)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o35} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i36)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;4.1 カシミール効果のエネルギー密度:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[4.1 カシミール効果のエネルギー密度:\]
+</p>
+<p>
+\[\]\[\tag{%o36} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i37)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">d</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">1e-9</span><span class="code_endofline">,</span> <span class="code_number">1e-8</span><span class="code_endofline">,</span> <span class="code_number">1e-7</span><span class="code_endofline">,</span> <span class="code_number">1e-6</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span>  <span class="code_comment">/* 平板間隔 [m] */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho_cas</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">rho_casimir</span><span class="code_operator">(</span><span class="code_variable">d</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  間隔 d = ~e m: ρ_casimir = ~e J/m³~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">d</span><span class="code_endofline">,</span> <span class="code_variable">rho_cas</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  間隔 d = 1.0e-9 m: \rho \_ casimir = -1.3001257724477527e+9 J/m\textasciicircum3
+\]\[  間隔 d = 1.0e-8 m: \rho \_ casimir = -1.300125772447753e+5 J/m\textasciicircum3
+\]\[  間隔 d = 1.0e-7 m: \rho \_ casimir = -1.3001257724477536e+1 J/m\textasciicircum3
+\]\[  間隔 d = 9.999999999999999e-7 m: \rho \_ casimir = -1.3001257724477533e-3 J/m\textasciicircum3\]
+</p>
+<p>
+\[\]\[\tag{%o37} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+アルクビエレ駆動に必要な間隔
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i38)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">d_required_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">rho_needed</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho_needed</span><span class="code_operator">:</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">float</span><span class="code_operator">(</span><span class="code_operator">(</span><span class="code_variable">%pi</span><span class="code_operator">^</span><span class="code_number">2</span> <span class="code_operator">·</span> <span class="code_variable">hbar</span> <span class="code_operator">·</span> <span class="code_variable">c</span> <span class="code_operator">/</span> <span class="code_operator">(</span><span class="code_number">240</span> <span class="code_operator">·</span> <span class="code_variable">rho_needed</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_operator">^</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_operator">/</span><span class="code_number">4</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o38} \mathop{d\_ required\_ alcubiere}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{:=}\mathop{block}\left( \left[ \ensuremath{\mathrm{rho\_ needed}}\right] \mathop{,}\ensuremath{\mathrm{rho\_ needed}}\mathop{:}\left| \mathop{rho\_ alcubiere}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \right| \mathop{,}\mathop{float}\left( {{\left( \frac{{{\ensuremath{\pi} }^{2}} \ensuremath{\mathrm{hbar}} c}{240 \ensuremath{\mathrm{rho\_ needed}}}\right) }^{\frac{1}{4}}}\right) \right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i39)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o39} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i40)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;4.2 アルクビエレ駆動に必要なカシミール間隔 (R=10m):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[4.2 アルクビエレ駆動に必要なカシミール間隔 (R=10m):\]
+</p>
+<p>
+\[\]\[\tag{%o40} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i41)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">d_req</span><span class="code_operator">:</span> <span class="code_function">d_required_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~f c: 必要な間隔 d = ~e m (~f nm)~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>        <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">d_req</span><span class="code_endofline">,</span> <span class="code_variable">d_req</span><span class="code_operator">·</span><span class="code_number">1e9</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.1 c: 必要な間隔 d = 7.018549807068197e-13 m (0.0007018549807068197 nm)
+\]\[  v = 0.5 c: 必要な間隔 d = 3.1387908944145004e-13 m (0.00031387908944145005 nm)
+\]\[  v = 1.0 c: 必要な間隔 d = 2.2194603261670878e-13 m (0.00022194603261670878 nm)\]
+</p>
+<p>
+\[\]\[\tag{%o41} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 5. 現実的な制約 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i42)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o42} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i43)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o43} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i44)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;5. 現実的な制約と改良案&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"5. 現実的な制約と改良案"\]
+</p>
+<p>
+\[\]\[\tag{%o44} "5. 現実的な制約と改良案"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i45)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o45} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+5.1 改良されたアルクビエレ計量 (Van Den Broeck, 1999)
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+微小ワープバブル: 必要な負のエネルギーを大幅に削減
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i46)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">rho_van_den_broeck</span><span class="code_operator">(</span><span class="code_variable">M</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">v</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_comment">/* 改良版: ρ ≈ -M v²/(4π R³) */</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">−</span><span class="code_variable">M</span> <span class="code_operator">·</span> <span class="code_variable">v</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">4</span><span class="code_operator">·</span><span class="code_variable">%pi</span><span class="code_operator">·</span><span class="code_variable">R</span><span class="code_operator">^</span><span class="code_number">3</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o46} \mathop{rho\_ van\_ den\_ broeck}\left( M\mathop{,}{v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{:=}\mathop{block}\left( [v]\mathop{,}v\mathop{:}{v_{\ensuremath{\mathrm{frac}}}} c\mathop{,}\frac{\mathop{-}M {{v}^{2}}}{4 \ensuremath{\pi}  {{R}^{3}}}\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i47)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o47} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i48)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;5.1 Van Den Broeckの改良案 (微小ワープバブル):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[5.1 Van Den Broeckの改良案 (微小ワープバブル):\]
+</p>
+<p>
+\[\]\[\tag{%o48} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i49)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  半径 R = 1m の微小バブル:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  半径 R = 1m の微小バブル:\]
+</p>
+<p>
+\[\]\[\tag{%o49} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i50)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho_vdb</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">rho_van_den_broeck</span><span class="code_operator">(</span><span class="code_variable">M_ship</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~f c: ρ ≈ ~e J/m³~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">rho_vdb</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.1 c: \rho  ≈ -7.152066466270222e+16 J/m\textasciicircum3
+\]\[  v = 0.5 c: \rho  ≈ -1.7880166165675554e+18 J/m\textasciicircum3
+\]\[  v = 1.0 c: \rho  ≈ -7.15206646627022e+18 J/m\textasciicircum3\]
+</p>
+<p>
+\[\]\[\tag{%o50} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+5.2 必要な総負のエネルギーの比較
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i51)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">E_total_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">V</span><span class="code_endofline">,</span> <span class="code_variable">rho</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">V</span><span class="code_operator">:</span> <span class="code_operator">(</span><span class="code_number">4</span><span class="code_operator">/</span><span class="code_number">3</span><span class="code_operator">)</span><span class="code_operator">·</span><span class="code_variable">%pi</span><span class="code_operator">·</span><span class="code_variable">R</span><span class="code_operator">^</span><span class="code_number">3</span><span class="code_endofline">,</span>  <span class="code_comment">/* 球の体積 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho</span><span class="code_operator">:</span> <span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho</span> <span class="code_operator">·</span> <span class="code_variable">V</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o51} \mathop{E\_ total\_ alcubiere}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{:=}\mathop{block}\left( \left[ V\mathop{,}rho\right] \mathop{,}V\mathop{:}\frac{4}{3} \ensuremath{\pi}  {{R}^{3}}\mathop{,}rho\mathop{:}\mathop{rho\_ alcubiere}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{,}rho V\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i52)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">E_total_vdb</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">V</span><span class="code_endofline">,</span> <span class="code_variable">rho</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">V</span><span class="code_operator">:</span> <span class="code_operator">(</span><span class="code_number">4</span><span class="code_operator">/</span><span class="code_number">3</span><span class="code_operator">)</span><span class="code_operator">·</span><span class="code_variable">%pi</span><span class="code_operator">·</span><span class="code_variable">R</span><span class="code_operator">^</span><span class="code_number">3</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho</span><span class="code_operator">:</span> <span class="code_function">rho_van_den_broeck</span><span class="code_operator">(</span><span class="code_variable">M_ship</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">rho</span> <span class="code_operator">·</span> <span class="code_variable">V</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o52} \mathop{E\_ total\_ vdb}\left( {v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{:=}\mathop{block}\left( \left[ V\mathop{,}rho\right] \mathop{,}V\mathop{:}\frac{4}{3} \ensuremath{\pi}  {{R}^{3}}\mathop{,}rho\mathop{:}\mathop{rho\_ van\_ den\_ broeck}\left( {M_{\ensuremath{\mathrm{ship}}}}\mathop{,}{v_{\ensuremath{\mathrm{frac}}}}\mathop{,}R\right) \mathop{,}rho V\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i53)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o53} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i54)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;5.2 必要な総負のエネルギーの比較 (v=1c):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[5.2 必要な総負のエネルギーの比較 (v=1c):\]
+</p>
+<p>
+\[\]\[\tag{%o54} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i55)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  アルクビエレ (R=10m): E ≈ ~e J~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">E_total_alcubiere</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  アルクビエレ (R=10m): E ≈ -2.2443182025001812e+27 J\]
+</p>
+<p>
+\[\]\[\tag{%o55} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i56)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  Van Den Broeck (R=1m): E ≈ ~e J~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">E_total_vdb</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  Van Den Broeck (R=1m): E ≈ -2.9958505957893916e+19 J\]
+</p>
+<p>
+\[\]\[\tag{%o56} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i57)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  比率: ~e~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">E_total_vdb</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">/</span><span class="code_function">E_total_alcubiere</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  比率: 1.3348599999999997e-8\]
+</p>
+<p>
+\[\]\[\tag{%o57} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 6. グラフ描画 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i58)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o58} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i59)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o59} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i60)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;6. グラフ描画&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"6. グラフ描画"\]
+</p>
+<p>
+\[\]\[\tag{%o60} "6. グラフ描画"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i61)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o61} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.1 速度 vs 必要なエネルギー密度
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i62)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o62} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i63)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ1: 速度 vs 必要なエネルギー密度 (R=10m)&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ1: 速度 vs 必要なエネルギー密度 (R=10m)"\]
+</p>
+<p>
+\[\]\[\tag{%o63} "グラフ1: 速度 vs 必要なエネルギー密度 (R=10m)"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i65)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v_plot</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span> <span class="code_operator">+</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* 0.1c から 2.0c */</span><span class="code_endofline"><br>
+</span><span class="code_variable">rho_plot_alc</span><span class="code_operator">:</span> <span class="code_function">map</span><span class="code_operator">(</span><span class="code_function">lambda</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">v</span><span class="code_operator">]</span><span class="code_endofline">,</span> <span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v\_ plot} \]
+</p>
+<p>
+\[\]\[\tag{rho\_ plot\_ alc} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i66)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">rho_plot_vdb</span><span class="code_operator">:</span> <span class="code_function">map</span><span class="code_operator">(</span><span class="code_function">lambda</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">v</span><span class="code_operator">]</span><span class="code_endofline">,</span> <span class="code_function">rho_van_den_broeck</span><span class="code_operator">(</span><span class="code_variable">M_ship</span><span class="code_endofline">,</span> <span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{rho\_ plot\_ vdb} \]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+アルクビエレ計量
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i67)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_endofline">,</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_variable">rho_plot_alc</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;ワープ速度 (c単位)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;|エネルギー密度| (J/m³)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;ZS-001: アルクビエレ駆動のエネルギー密度&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logy</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o67} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Van Den Broeck改良版
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i68)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_endofline">,</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_variable">rho_plot_vdb</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;ワープ速度 (c単位)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;|エネルギー密度| (J/m³)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;ZS-001: Van Den Broeck改良版&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logy</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o68} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.2 半径 vs 必要なエネルギー密度
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i69)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o69} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i70)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ2: 半径 vs 必要なエネルギー密度 (v=1c)&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ2: 半径 vs 必要なエネルギー密度 (v=1c)"\]
+</p>
+<p>
+\[\]\[\tag{%o70} "グラフ2: 半径 vs 必要なエネルギー密度 (v=1c)"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i72)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">R_plot</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span> <span class="code_operator">+</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* 0.1m から 10m */</span><span class="code_endofline"><br>
+</span><span class="code_variable">rho_R_plot</span><span class="code_operator">:</span> <span class="code_function">map</span><span class="code_operator">(</span><span class="code_function">lambda</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">R</span><span class="code_operator">]</span><span class="code_endofline">,</span> <span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">R_plot</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{R\_ plot} \]
+</p>
+<p>
+\[\]\[\tag{rho\_ R\_ plot} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i73)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">R_plot</span><span class="code_endofline">,</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_variable">rho_R_plot</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;ワープバブル半径 R (m)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;|エネルギー密度| (J/m³)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;ZS-001: 半径の影響 (v=1c)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logx</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logy</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o73} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.3 カシミール効果との比較
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i74)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o74} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i75)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ3: カシミール効果 vs アルクビエレ要件&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ3: カシミール効果 vs アルクビエレ要件"\]
+</p>
+<p>
+\[\]\[\tag{%o75} "グラフ3: カシミール効果 vs アルクビエレ要件"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i77)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">d_plot</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">10</span><span class="code_operator">^</span><span class="code_operator">(</span><span class="code_operator">−</span><span class="code_number">9</span> <span class="code_operator">−</span> <span class="code_number">6</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* 1pm から 1nm */</span><span class="code_endofline"><br>
+</span><span class="code_variable">rho_cas_plot</span><span class="code_operator">:</span> <span class="code_function">map</span><span class="code_operator">(</span><span class="code_variable">rho_casimir</span><span class="code_endofline">,</span> <span class="code_variable">d_plot</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{d\_ plot} \]
+</p>
+<p>
+\[\]\[\tag{rho\_ cas\_ plot} \]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+アルクビエレ要件 (v=1c, R=10m)
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i78)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">rho_alc_const</span><span class="code_operator">:</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{rho\_ alc\_ const} \frac{1.6832386518751362 {{10}^{24}}}{\ensuremath{\pi} }\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i79)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">alc_line</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_variable">rho_alc_const</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_function">length</span><span class="code_operator">(</span><span class="code_variable">d_plot</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{alc\_ line} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i80)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">d_plot</span><span class="code_endofline">,</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_variable">rho_cas_plot</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">d_plot</span><span class="code_endofline">,</span> <span class="code_variable">alc_line</span><span class="code_operator">]</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;カシミール平板間隔 d (m)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;|エネルギー密度| (J/m³)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;ZS-001: カシミール効果 vs アルクビエレ要件&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">legend</span><span class="code_endofline">,</span> <span class="code_string">&quot;カシミール効果&quot;</span><span class="code_endofline">,</span> <span class="code_string">&quot;アルクビエレ要件 (v=1c, R=10m)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logx</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logy</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o80} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 7. 量子重力効果の評価 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i81)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o81} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i82)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o82} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i83)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;7. 量子重力効果の評価&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"7. 量子重力効果の評価"\]
+</p>
+<p>
+\[\]\[\tag{%o83} "7. 量子重力効果の評価"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i84)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o84} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+プランクスケール
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i89)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">L_planck</span><span class="code_operator">:</span> <span class="code_function">sqrt</span><span class="code_operator">(</span><span class="code_variable">hbar</span><span class="code_operator">·</span><span class="code_variable">G</span><span class="code_operator">/</span><span class="code_variable">c</span><span class="code_operator">^</span><span class="code_number">3</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* プランク長さ [m] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">T_planck</span><span class="code_operator">:</span> <span class="code_function">sqrt</span><span class="code_operator">(</span><span class="code_variable">hbar</span><span class="code_operator">·</span><span class="code_variable">G</span><span class="code_operator">/</span><span class="code_variable">c</span><span class="code_operator">^</span><span class="code_number">5</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* プランク時間 [s] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">M_planck</span><span class="code_operator">:</span> <span class="code_function">sqrt</span><span class="code_operator">(</span><span class="code_variable">hbar</span><span class="code_operator">·</span><span class="code_variable">c</span><span class="code_operator">/</span><span class="code_variable">G</span><span class="code_operator">)</span><span class="code_endofline">;</span>    <span class="code_comment">/* プランク質量 [kg] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">E_planck</span><span class="code_operator">:</span> <span class="code_variable">M_planck</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_endofline">;</span>    <span class="code_comment">/* プランクエネルギー [J] */</span><span class="code_endofline"><br>
+</span><span class="code_endofline"><br>
+</span><span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{L\_ planck} 1.61625502392855 {{10}^{-35}}\]
+</p>
+<p>
+\[\]\[\tag{T\_ planck} 5.391246446661944 {{10}^{-44}}\]
+</p>
+<p>
+\[\]\[\tag{M\_ planck} 2.176434342051127 {{10}^{-8}}\]
+</p>
+<p>
+\[\]\[\tag{E\_ planck} 1.9560816360991087 {{10}^{9}}\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o89} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i90)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;7.1 プランクスケール:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[7.1 プランクスケール:\]
+</p>
+<p>
+\[\]\[\tag{%o90} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i91)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  プランク長さ: L_p = ~e m~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">L_planck</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  プランク長さ: L\_ p = 1.6162550239285497e-35 m\]
+</p>
+<p>
+\[\]\[\tag{%o91} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i92)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  プランク時間: T_p = ~e s~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">T_planck</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  プランク時間: T\_ p = 5.391246446661944e-44 s\]
+</p>
+<p>
+\[\]\[\tag{%o92} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i93)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  プランク質量: M_p = ~e kg~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">M_planck</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  プランク質量: M\_ p = 2.176434342051127e-8 kg\]
+</p>
+<p>
+\[\]\[\tag{%o93} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i94)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  プランクエネルギー: E_p = ~e J~%&quot;</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">E_planck</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  プランクエネルギー: E\_ p = 1.9560816360991087e+9 J\]
+</p>
+<p>
+\[\]\[\tag{%o94} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+量子重力が無視できるスケール
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+曲率スケールがプランク長さより十分大きい場合
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i95)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">quantum_gravity_scale</span><span class="code_operator">(</span><span class="code_variable">R</span><span class="code_endofline">,</span> <span class="code_variable">v</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">curvature_scale</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_comment">/* 曲率スケールの簡易推定: R_curv ≈ R/v */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">curvature_scale</span><span class="code_operator">:</span> <span class="code_variable">R</span> <span class="code_operator">/</span> <span class="code_variable">v</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">curvature_scale</span> <span class="code_operator">/</span> <span class="code_variable">L_planck</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o95} \mathop{quantum\_ gravity\_ scale}\left( R\mathop{,}v\right) \mathop{:=}\mathop{block}\left( \left[ \ensuremath{\mathrm{curvature\_ scale}}\right] \mathop{,}\ensuremath{\mathrm{curvature\_ scale}}\mathop{:}\frac{R}{v}\mathop{,}\frac{\ensuremath{\mathrm{curvature\_ scale}}}{{L_{\ensuremath{\mathrm{planck}}}}}\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i96)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o96} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i97)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;7.2 量子重力効果の無視可能性 (R=10m):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[7.2 量子重力効果の無視可能性 (R=10m):\]
+</p>
+<p>
+\[\]\[\tag{%o97} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i98)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">qg_ratio</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">quantum_gravity_scale</span><span class="code_operator">(</span><span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_variable">qg_ratio</span> <span class="code_endofline">&gt;</span> <span class="code_number">100</span> <span class="code_function">then</span> <span class="code_variable">status</span><span class="code_operator">:</span> <span class="code_string">&quot;無視可能&quot;</span><span class="code_endofline"><br>
+</span>    <span class="code_function">else</span> <span class="code_function">if</span> <span class="code_variable">qg_ratio</span> <span class="code_endofline">&gt;</span> <span class="code_number">10</span> <span class="code_function">then</span> <span class="code_variable">status</span><span class="code_operator">:</span> <span class="code_string">&quot;ほぼ無視可能&quot;</span><span class="code_endofline"><br>
+</span>    <span class="code_function">else</span> <span class="code_function">if</span> <span class="code_variable">qg_ratio</span> <span class="code_endofline">&gt;</span> <span class="code_number">1</span> <span class="code_function">then</span> <span class="code_variable">status</span><span class="code_operator">:</span> <span class="code_string">&quot;境界領域&quot;</span><span class="code_endofline"><br>
+</span>    <span class="code_function">else</span> <span class="code_variable">status</span><span class="code_operator">:</span> <span class="code_string">&quot;量子重力効果重要&quot;</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~f c: 曲率/プランク長さ = ~f → ~a~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>        <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">qg_ratio</span><span class="code_endofline">,</span> <span class="code_variable">status</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.1 c: 曲率/プランク長さ = 6187142407572229000000000000000000000.0 -&gt;   無視可能
+\]\[  v = 1.0 c: 曲率/プランク長さ = 618714240757222960000000000000000000.0 -&gt;   無視可能
+\]\[  v = 10.0 c: 曲率/プランク長さ = 61871424075722300000000000000000000.0 -&gt;   無視可能\]
+</p>
+<p>
+\[\]\[\tag{%o98} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 8. ファイル出力 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i99)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o99} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i100)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o100} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i101)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;8. 結果の保存&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"8. 結果の保存"\]
+</p>
+<p>
+\[\]\[\tag{%o101} "8. 結果の保存"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i102)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o102} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i103)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">with_stdout</span><span class="code_operator">(</span><span class="code_string">&quot;ZS001_energy_requirements.txt&quot;</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;v_fraction,R_m,rho_alcubiere_Jm3,rho_vdb_Jm3,d_required_m,quantum_gravity_ratio~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_endofline"><br>
+</span>    <span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">2</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">5</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>        <span class="code_function">for</span> <span class="code_variable">R</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">10</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">100</span><span class="code_endofline">.</span><span class="code_number">0</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>            <span class="code_variable">rho_alc</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">rho_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>            <span class="code_variable">rho_vdb</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">rho_van_den_broeck</span><span class="code_operator">(</span><span class="code_variable">M_ship</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>            <span class="code_variable">d_req</span><span class="code_operator">:</span> <span class="code_function">d_required_alcubiere</span><span class="code_operator">(</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>            <span class="code_variable">qg_ratio</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">quantum_gravity_scale</span><span class="code_operator">(</span><span class="code_variable">R</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>            <span class="code_endofline"><br>
+</span>            <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;~f,~f,~e,~e,~e,~f~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>                <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">R</span><span class="code_endofline">,</span> <span class="code_variable">rho_alc</span><span class="code_endofline">,</span> <span class="code_variable">rho_vdb</span><span class="code_endofline">,</span> <span class="code_variable">d_req</span><span class="code_endofline">,</span> <span class="code_variable">qg_ratio</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span>        <span class="code_operator">)</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o103} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i104)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;✅ 計算結果を ZS001_energy_requirements.txt に保存しました&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"✅ 計算結果を ZS001\_ energy\_ requirements.txt に保存しました"\]
+</p>
+<p>
+\[\]\[\tag{%o104} "✅ 計算結果を ZS001\_ energy\_ requirements.txt に保存しました"\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 9. まとめと結論 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i105)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o105} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i106)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o106} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i107)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;✅ ZS‑001 エネルギー密度計算 完了&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"✅ ZS‑001 エネルギー密度計算 完了"\]
+</p>
+<p>
+\[\]\[\tag{%o107} "✅ ZS‑001 エネルギー密度計算 完了"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i108)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o108} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i109)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o109} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i110)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;主要な結果:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"主要な結果:"\]
+</p>
+<p>
+\[\]\[\tag{%o110} "主要な結果:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i111)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. アルクビエレ駆動に必要な負のエネルギー密度を定量化&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  1. アルクビエレ駆動に必要な負のエネルギー密度を定量化"\]
+</p>
+<p>
+\[\]\[\tag{%o111} "  1. アルクビエレ駆動に必要な負のエネルギー密度を定量化"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i112)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  2. カシミール効果による実現可能性を評価&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  2. カシミール効果による実現可能性を評価"\]
+</p>
+<p>
+\[\]\[\tag{%o112} "  2. カシミール効果による実現可能性を評価"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i113)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  3. Van Den Broeckの改良案でエネルギー要件を大幅削減&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  3. Van Den Broeckの改良案でエネルギー要件を大幅削減"\]
+</p>
+<p>
+\[\]\[\tag{%o113} "  3. Van Den Broeckの改良案でエネルギー要件を大幅削減"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i114)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  4. 量子重力効果が無視できるスケールを特定&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  4. 量子重力効果が無視できるスケールを特定"\]
+</p>
+<p>
+\[\]\[\tag{%o114} "  4. 量子重力効果が無視できるスケールを特定"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i115)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o115} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i116)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;重要な発見:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"重要な発見:"\]
+</p>
+<p>
+\[\]\[\tag{%o116} "重要な発見:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i117)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. 光速ワープ(v=1c)には極めて高いエネルギー密度が必要&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  1. 光速ワープ(v=1c)には極めて高いエネルギー密度が必要"\]
+</p>
+<p>
+\[\]\[\tag{%o117} "  1. 光速ワープ(v=1c)には極めて高いエネルギー密度が必要"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i118)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  2. カシミール効果ではピコメートル以下の間隔が必要&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  2. カシミール効果ではピコメートル以下の間隔が必要"\]
+</p>
+<p>
+\[\]\[\tag{%o118} "  2. カシミール効果ではピコメートル以下の間隔が必要"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i119)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  3. 微小ワープバブル(R≈1m)が現実的&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  3. 微小ワープバブル(R≈1m)が現実的"\]
+</p>
+<p>
+\[\]\[\tag{%o119} "  3. 微小ワープバブル(R≈1m)が現実的"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i120)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  4. 低速ワープ(v&lt;0.1c)なら近未来技術で可能か&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  4. 低速ワープ(v&amp;lt;  0.1c)なら近未来技術で可能か"\]
+</p>
+<p>
+\[\]\[\tag{%o120} "  4. 低速ワープ(v&amp;lt;  0.1c)なら近未来技術で可能か"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i121)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o121} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i122)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;生成されたファイル:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"生成されたファイル:"\]
+</p>
+<p>
+\[\]\[\tag{%o122} "生成されたファイル:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i123)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. ZS001_energy_requirements.txt - 詳細計算データ&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  1. ZS001\_ energy\_ requirements.txt - 詳細計算データ"\]
+</p>
+<p>
+\[\]\[\tag{%o123} "  1. ZS001\_ energy\_ requirements.txt - 詳細計算データ"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i124)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o124} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i125)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;表示されたグラフ:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"表示されたグラフ:"\]
+</p>
+<p>
+\[\]\[\tag{%o125} "表示されたグラフ:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i126)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. 速度 vs エネルギー密度&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  1. 速度 vs エネルギー密度"\]
+</p>
+<p>
+\[\]\[\tag{%o126} "  1. 速度 vs エネルギー密度"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i127)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  2. 半径 vs エネルギー密度&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  2. 半径 vs エネルギー密度"\]
+</p>
+<p>
+\[\]\[\tag{%o127} "  2. 半径 vs エネルギー密度"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i128)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  3. カシミール効果との比較&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  3. カシミール効果との比較"\]
+</p>
+<p>
+\[\]\[\tag{%o128} "  3. カシミール効果との比較"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i129)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o129} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i130)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;次のステップ: ZS-002 (因果律違反の回避メカニズム)&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"次のステップ: ZS-002 (因果律違反の回避メカニズム)"\]
+</p>
+<p>
+\[\]\[\tag{%o130} "次のステップ: ZS-002 (因果律違反の回避メカニズム)"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i131)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o131} "================================================="\]
+</p>
+
+ <hr>
+ <p><small> Created with <a href="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</a>.</small></p>
+ <small> The source of this Maxima session can be downloaded <a href="ZS001_htmlimg/ZS001.wxmx">here</a>.</small>
+ </body>
+</html>

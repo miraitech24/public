@@ -1,0 +1,1257 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>ZS003</title>
+  <meta name="generator" content="wxMaxima">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  // A comment that hinders wxWidgets from optimizing this tag too much.
+</script>
+  <link rel="stylesheet" type="text/css" href="ZS003_htmlimg/ZS003.css">
+ </head>
+ <body>
+
+<!-- ****************************************************** -->
+<!-- *        Created with wxMaxima version 26.01.0       * -->
+<!-- ****************************************************** -->
+<noscript><div class="error message"><p>Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</p></div></noscript><p hidden = "hidden">\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)</p>
+
+<!-- Text cell -->
+
+
+<div class="comment">
+ZS-003: Final fixed version
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i1)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o1} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i2)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;==========================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"=========================================="\]
+</p>
+<p>
+\[\]\[\tag{%o2} "=========================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i3)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;ZS-003: Arrival in 0 seconds analysis&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"ZS-003: Arrival in 0 seconds analysis"\]
+</p>
+<p>
+\[\]\[\tag{%o3} "ZS-003: Arrival in 0 seconds analysis"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i4)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;==========================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"=========================================="\]
+</p>
+<p>
+\[\]\[\tag{%o4} "=========================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Constants
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i5)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">c</span><span class="code_operator">:</span> <span class="code_number">299792458</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{c} 299792458\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i7)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">L</span><span class="code_operator">:</span> <span class="code_number">4</span><span class="code_endofline">.</span><span class="code_number">2</span> <span class="code_operator">·</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_endofline">;</span>  <span class="code_comment">/* 4.2 light years */</span><span class="code_endofline"><br>
+</span><span class="code_endofline"><br>
+</span><span class="code_comment">/* Safe time dilation function */</span><span class="code_endofline"><br>
+</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ratio</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">ratio</span><span class="code_operator">:</span> <span class="code_variable">v</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_operator">/</span><span class="code_variable">c</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">−</span> <span class="code_variable">ratio</span><span class="code_operator">)</span> <span class="code_endofline">&lt;</span> <span class="code_number">1e-10</span> <span class="code_function">then</span> <span class="code_number">1e10</span><span class="code_endofline"><br>
+</span>    <span class="code_function">else</span> <span class="code_number">1</span><span class="code_operator">/</span><span class="code_function">sqrt</span><span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">−</span> <span class="code_variable">ratio</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{L} 3.97362 {{10}^{16}}\]
+</p>
+<p>
+\[\]\[\tag{%o7} \mathop{time\_ dilation\_ factor}(v)\mathop{:=}\mathop{block}\left( \left[ \ensuremath{\mathrm{ratio}}\right] \mathop{,}\ensuremath{\mathrm{ratio}}\mathop{:}\frac{{{v}^{2}}}{{{c}^{2}}}\mathop{,}\mathop{if}\mathop{ }\left| 1\mathop{-}\ensuremath{\mathrm{ratio}}\right| \mathop{&amp;lt;  }1.0 {{10}^{-10}}\mathop{ }\mathop{then}\mathop{ }1.0 {{10}^{10}}\mathop{ }\mathop{else}\mathop{ }\frac{1}{\sqrt{1\mathop{-}\ensuremath{\mathrm{ratio}}}}\right) \]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+1. Basic calculations
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i8)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o8} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i9)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;1. Time dilation:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"1. Time dilation:"\]
+</p>
+<p>
+\[\]\[\tag{%o9} "1. Time dilation:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i10)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">99</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">999</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">gamma</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;v = ~fc: gamma = ~f~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">gamma</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[v = 0.1c: gamma = 1.005037815259212
+\]\[v = 0.5c: gamma = 1.1547005383792517
+\]\[v = 0.9c: gamma = 2.294157338705617
+\]\[v = 0.99c: gamma = 7.088812050083374
+\]\[v = 0.999c: gamma = 22.36627204212937\]
+</p>
+<p>
+\[\]\[\tag{%o10} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+2. Trip analysis
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i11)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o11} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i12)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;2. 4.2 light year trip:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"2. 4.2 light year trip:"\]
+</p>
+<p>
+\[\]\[\tag{%o12} "2. 4.2 light year trip:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i13)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v_frac</span><span class="code_operator">:</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">999</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v\_ frac} 0.999\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i14)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v} 2.99492665542 {{10}^{8}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i15)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">gamma_val</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{gamma\_ val} 22.36627204212937\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i18)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">t_earth</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">L</span><span class="code_operator">/</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* Earth time */</span><span class="code_endofline"><br>
+</span><span class="code_variable">t_ship</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">t_earth</span><span class="code_operator">/</span><span class="code_variable">gamma_val</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* Ship time */</span><span class="code_endofline"><br>
+</span><span class="code_endofline"><br>
+</span><span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;At v = ~fc:~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{t\_ earth} 1.326783743704986 {{10}^{8}}\]
+</p>
+<p>
+\[\]\[\tag{t\_ ship} 5932073.709940757
+\]\[At v = 0.999c:\]
+</p>
+<p>
+\[\]\[\tag{%o18} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i19)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  Earth time: ~e s = ~f years~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>       <span class="code_variable">t_earth</span><span class="code_endofline">,</span> <span class="code_variable">t_earth</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  Earth time: 1.3267837437049862e+8 s = 4.204323978074967 years\]
+</p>
+<p>
+\[\]\[\tag{%o19} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i20)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  Ship time: ~e s = ~f years~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>       <span class="code_variable">t_ship</span><span class="code_endofline">,</span> <span class="code_variable">t_ship</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  Ship time: 5.932073709940757e+6 s = 0.1879760726398952 years\]
+</p>
+<p>
+\[\]\[\tag{%o20} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i21)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  Time dilation factor: ~f~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">gamma_val</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  Time dilation factor: 22.36627204212937\]
+</p>
+<p>
+\[\]\[\tag{%o21} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+3. Plotting
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i22)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o22} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i23)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;3. Plotting:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"3. Plotting:"\]
+</p>
+<p>
+\[\]\[\tag{%o23} "3. Plotting:"\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Plot 1: Gamma vs v/c
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i24)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v_plot</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">01</span> <span class="code_operator">+</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">989</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">50</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">50</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v\_ plot} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i25)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">gamma_plot</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_operator">]</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{gamma\_ plot} []\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i26)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac_plot</span> <span class="code_function">in</span> <span class="code_variable">v_plot</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v_plot_val</span><span class="code_operator">:</span> <span class="code_variable">v_frac_plot</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">gamma_plot_val</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v_plot_val</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">gamma_plot</span><span class="code_operator">:</span> <span class="code_function">append</span><span class="code_operator">(</span><span class="code_variable">gamma_plot</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_variable">gamma_plot_val</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o26} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i27)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_endofline">,</span> <span class="code_variable">gamma_plot</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;v/c&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;gamma&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;Time dilation factor&quot;</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o27} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Plot 2: Ship time vs v/c
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i28)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">ship_time_plot</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_operator">]</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{ship\_ time\_ plot} []\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i29)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac_plot</span> <span class="code_function">in</span> <span class="code_variable">v_plot</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v_plot_val</span><span class="code_operator">:</span> <span class="code_variable">v_frac_plot</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">gamma_plot_val</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v_plot_val</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">t_earth_plot</span><span class="code_operator">:</span> <span class="code_variable">L</span><span class="code_operator">/</span><span class="code_variable">v_plot_val</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">t_ship_plot</span><span class="code_operator">:</span> <span class="code_variable">t_earth_plot</span><span class="code_operator">/</span><span class="code_variable">gamma_plot_val</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">ship_time_plot</span><span class="code_operator">:</span> <span class="code_function">append</span><span class="code_operator">(</span><span class="code_variable">ship_time_plot</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_variable">t_ship_plot</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o29} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i30)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">v_plot</span><span class="code_endofline">,</span> <span class="code_variable">ship_time_plot</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;v/c&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;Ship time (seconds)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;Ship time for 4.2 ly trip&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">logy</span><span class="code_endofline">,</span> <span class="code_function">true</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o30} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+4. Save results - fixed printf statements
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i31)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o31} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i32)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;4. Saving results...&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"4. Saving results..."\]
+</p>
+<p>
+\[\]\[\tag{%o32} "4. Saving results..."\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i33)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">f</span><span class="code_operator">:</span> <span class="code_function">openw</span><span class="code_operator">(</span><span class="code_string">&quot;zs003_final.txt&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{f} \ensuremath{\mathrm{\backslash \neq \backslash \{Stream \backslash [CHARACTER\backslash ]}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Fixed: Use proper format specifiers
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i34)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;ZS-003 Results~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o34} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i35)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;==============~%~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o35} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i36)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Time dilation factors:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o36} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i37)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">99</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">999</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v_val</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">gamma_val</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">time_dilation_factor</span><span class="code_operator">(</span><span class="code_variable">v_val</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;v = ~fc: gamma = ~f~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">gamma_val</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o37} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i38)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;~%4.2 light year trip at v=0.999c:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o38} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i39)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Earth time: ~e seconds~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">t_earth</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o39} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i40)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Earth time: ~f years~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">t_earth</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o40} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i41)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Ship time: ~e seconds~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">t_ship</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o41} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i42)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Ship time: ~f years~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">t_ship</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o42} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i43)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Time dilation factor: ~f~%~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">gamma_val</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o43} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+Fixed: No ~ in the middle of string
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i44)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;At v=0.999c, ship time is 0.19 years vs 4.2 years Earth time~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o44} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i45)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;For '0 second' arrival, v must be extremely close to c~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o45} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i46)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_endofline">,</span> <span class="code_string">&quot;Practical interstellar travel requires near-light speeds~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o46} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i47)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">close</span><span class="code_operator">(</span><span class="code_variable">f</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o47} true\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i48)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;Results saved to zs003_final.txt&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"Results saved to zs003\_ final.txt"\]
+</p>
+<p>
+\[\]\[\tag{%o48} "Results saved to zs003\_ final.txt"\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+5. Conclusion
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i49)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o49} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i50)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;==========================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"=========================================="\]
+</p>
+<p>
+\[\]\[\tag{%o50} "=========================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i51)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;ZS-003 COMPLETE&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"ZS-003 COMPLETE"\]
+</p>
+<p>
+\[\]\[\tag{%o51} "ZS-003 COMPLETE"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i52)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;==========================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"=========================================="\]
+</p>
+<p>
+\[\]\[\tag{%o52} "=========================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i53)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o53} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i54)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;Results:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"Results:"\]
+</p>
+<p>
+\[\]\[\tag{%o54} "Results:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i55)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* v=0.9c: gamma=2.3&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* v=0.9c: gamma=2.3"\]
+</p>
+<p>
+\[\]\[\tag{%o55} "\cdot  v=0.9c: gamma=2.3"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i56)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* v=0.99c: gamma=7.1&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* v=0.99c: gamma=7.1"\]
+</p>
+<p>
+\[\]\[\tag{%o56} "\cdot  v=0.99c: gamma=7.1"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i57)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* v=0.999c: gamma=22.4&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* v=0.999c: gamma=22.4"\]
+</p>
+<p>
+\[\]\[\tag{%o57} "\cdot  v=0.999c: gamma=22.4"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i58)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* 4.2 ly at v=0.999c:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* 4.2 ly at v=0.999c:"\]
+</p>
+<p>
+\[\]\[\tag{%o58} "\cdot  4.2 ly at v=0.999c:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i59)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  Earth: 4.2 years&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  Earth: 4.2 years"\]
+</p>
+<p>
+\[\]\[\tag{%o59} "  Earth: 4.2 years"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i60)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  Ship: 0.19 years&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"  Ship: 0.19 years"\]
+</p>
+<p>
+\[\]\[\tag{%o60} "  Ship: 0.19 years"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i61)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o61} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i62)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;ZS series complete:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"ZS series complete:"\]
+</p>
+<p>
+\[\]\[\tag{%o62} "ZS series complete:"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i63)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* ZS-001: Energy requirements&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* ZS-001: Energy requirements"\]
+</p>
+<p>
+\[\]\[\tag{%o63} "\cdot  ZS-001: Energy requirements"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i64)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* ZS-002: Causality avoidance&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* ZS-002: Causality avoidance"\]
+</p>
+<p>
+\[\]\[\tag{%o64} "\cdot  ZS-002: Causality avoidance"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i65)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;* ZS-003: Frame definition&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"* ZS-003: Frame definition"\]
+</p>
+<p>
+\[\]\[\tag{%o65} "\cdot  ZS-003: Frame definition"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i66)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o66} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i67)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;Next: Overall integration&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"Next: Overall integration"\]
+</p>
+<p>
+\[\]\[\tag{%o67} "Next: Overall integration"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i68)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;==========================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"=========================================="\]
+</p>
+<p>
+\[\]\[\tag{%o68} "=========================================="\]
+</p>
+
+ <hr>
+ <p><small> Created with <a href="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</a>.</small></p>
+ <small> The source of this Maxima session can be downloaded <a href="ZS003_htmlimg/ZS003.wxmx">here</a>.</small>
+ </body>
+</html>

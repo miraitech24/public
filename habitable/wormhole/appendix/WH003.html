@@ -1,0 +1,2021 @@
+<!DOCTYPE html>
+<html>
+ <head>
+  <title>WH003</title>
+  <meta name="generator" content="wxMaxima">
+  <meta http-equiv="Content-Type" content="text/html; charset=utf-8">
+<script type="text/x-mathjax-config">
+  MathJax.Hub.Config({
+    displayAlign: "left",
+    context: "MathJax",
+    TeX: {TagSide: "left"}
+  })
+</script>
+<script id="MathJax-script" async src="https://cdn.jsdelivr.net/npm/mathjax@3/es5/tex-mml-chtml.js">
+  // A comment that hinders wxWidgets from optimizing this tag too much.
+</script>
+  <link rel="stylesheet" type="text/css" href="WH003_htmlimg/WH003.css">
+ </head>
+ <body>
+
+<!-- ****************************************************** -->
+<!-- *        Created with wxMaxima version 26.01.0       * -->
+<!-- ****************************************************** -->
+<noscript><div class="error message"><p>Please enable JavaScript in order to get a 2d display of the equations embedded in this web page.</p></div></noscript><p hidden = "hidden">\(      \DeclareMathOperator{\abs}{abs}
+      \newcommand{\ensuremath}[1]{\mbox{$#1$}}
+\)</p>
+
+<!-- Text cell -->
+
+
+<div class="comment">
+========================================================<br>WH-003: ワームホール通過のタイムトラベル解析 (Maxima)<br>目的: 閉時間的曲線(CTC)と因果律問題の数学的解析<br>========================================================
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 1. 物理定数 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i5)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">G</span><span class="code_operator">:</span> <span class="code_number">6</span><span class="code_endofline">.</span><span class="code_number">67430e-11</span><span class="code_endofline">;</span>        <span class="code_comment">/* 重力定数 [m^3 kg^-1 s^-2] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">c</span><span class="code_operator">:</span> <span class="code_number">299792458</span><span class="code_endofline">;</span>          <span class="code_comment">/* 光速 [m/s] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">hbar</span><span class="code_operator">:</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">054571817e-34</span><span class="code_endofline">;</span> <span class="code_comment">/* 換算プランク定数 [J·s] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">kB</span><span class="code_operator">:</span> <span class="code_number">1</span><span class="code_endofline">.</span><span class="code_number">380649e-23</span><span class="code_endofline">;</span>      <span class="code_comment">/* ボルツマン定数 [J/K] */</span><span class="code_endofline"><br>
+</span><span class="code_variable">pi</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">%pi</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{G} 6.6743 {{10}^{-11}}\]
+</p>
+<p>
+\[\]\[\tag{c} 299792458\]
+</p>
+<p>
+\[\]\[\tag{hbar} 1.054571817 {{10}^{-34}}\]
+</p>
+<p>
+\[\]\[\tag{kB} 1.380649 {{10}^{-23}}\]
+</p>
+<p>
+\[\]\[\tag{pi} 3.141592653589793\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 2. ワームホール計量（モリス・ソーン型） ----------
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+計量: ds² = -c²dt² + dl² + (b₀² + l²)(dθ² + sin²θ dφ²)
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 3. 閉時間的曲線(CTC)の形成条件 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i6)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o6} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i7)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o7} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i8)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;WH‑003: ワームホール通過のタイムトラベル解析&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"WH‑003: ワームホール通過のタイムトラベル解析"\]
+</p>
+<p>
+\[\]\[\tag{%o8} "WH‑003: ワームホール通過のタイムトラベル解析"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i9)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o9} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+3.1 ワームホールの時間遅延効果
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i12)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">Phi1</span><span class="code_operator">:</span> <span class="code_number">0</span><span class="code_endofline">;</span>  <span class="code_comment">/* 口1の赤方偏移（基準） */</span><span class="code_endofline"><br>
+</span><span class="code_variable">Phi2</span><span class="code_operator">:</span> <span class="code_number">0</span><span class="code_endofline">;</span>  <span class="code_comment">/* 口2の赤方偏移（同じと仮定） */</span><span class="code_endofline"><br>
+</span><span class="code_endofline"><br>
+</span><span class="code_variable">time_dilation_factor</span><span class="code_operator">:</span> <span class="code_function">exp</span><span class="code_operator">(</span><span class="code_variable">Phi2</span> <span class="code_operator">−</span> <span class="code_variable">Phi1</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{Phi1} 0\]
+</p>
+<p>
+\[\]\[\tag{Phi2} 0\]
+</p>
+<p>
+\[\]\[\tag{time\_ dilation\_ factor} 1\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i13)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;3.1 時間遅延係数 (Φ₁=~f, Φ₂=~f): ~f~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>    <span class="code_variable">Phi1</span><span class="code_endofline">,</span> <span class="code_variable">Phi2</span><span class="code_endofline">,</span> <span class="code_variable">time_dilation_factor</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[3.1 時間遅延係数 (\Phi ₁=0.0, \Phi ₂=0.0): 1.0\]
+</p>
+<p>
+\[\]\[\tag{%o13} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+3.2 移動による時間遅延（特殊相対論）
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+速度 v で移動する場合の時間遅延: Δt' = Δt / γ
+</div>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+v = c の時の処理を追加
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i14)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">lorentz_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ratio</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">ratio</span><span class="code_operator">:</span> <span class="code_variable">v</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_operator">/</span><span class="code_variable">c</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_function">abs</span><span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">−</span> <span class="code_variable">ratio</span><span class="code_operator">)</span> <span class="code_endofline">&lt;</span> <span class="code_number">1e-10</span> <span class="code_function">then</span> <span class="code_number">1e10</span>  <span class="code_comment">/* v ≈ c の時は大きな値 */</span><span class="code_endofline"><br>
+</span>    <span class="code_function">else</span> <span class="code_number">1</span><span class="code_operator">/</span><span class="code_function">sqrt</span><span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">−</span> <span class="code_variable">ratio</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o14} \mathop{lorentz\_ factor}(v)\mathop{:=}\mathop{block}\left( \left[ \ensuremath{\mathrm{ratio}}\right] \mathop{,}\ensuremath{\mathrm{ratio}}\mathop{:}\frac{{{v}^{2}}}{{{c}^{2}}}\mathop{,}\mathop{if}\mathop{ }\left| 1\mathop{-}\ensuremath{\mathrm{ratio}}\right| \mathop{&amp;lt;  }1.0 {{10}^{-10}}\mathop{ }\mathop{then}\mathop{ }1.0 {{10}^{10}}\mathop{ }\mathop{else}\mathop{ }\frac{1}{\sqrt{1\mathop{-}\ensuremath{\mathrm{ratio}}}}\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i15)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o15} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i16)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;3.2 特殊相対論的時間遅延:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[3.2 特殊相対論的時間遅延:\]
+</p>
+<p>
+\[\]\[\tag{%o16} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i17)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">99</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">g</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">lorentz_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;   v = ~,2f c: γ = ~,6f, 時間遅延 = 1/~,6f~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>        <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">g</span><span class="code_endofline">,</span> <span class="code_variable">g</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[   v = 0.10 c: \gamma  = 1.005038, 時間遅延 = 1/1.005038
+\]\[   v = 0.50 c: \gamma  = 1.154701, 時間遅延 = 1/1.154701
+\]\[   v = 0.90 c: \gamma  = 2.294157, 時間遅延 = 1/2.294157
+\]\[   v = 0.99 c: \gamma  = 7.088812, 時間遅延 = 1/7.088812\]
+</p>
+<p>
+\[\]\[\tag{%o17} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 4. タイムマシンの数学的モデル ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i18)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o18} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i19)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o19} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i20)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;4. タイムマシンの数学的モデル&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"4. タイムマシンの数学的モデル"\]
+</p>
+<p>
+\[\]\[\tag{%o20} "4. タイムマシンの数学的モデル"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i21)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o21} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+4.1 ワームホールタイムマシン（Visserモデル）
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i22)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">delta_t_timemachine</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">t1</span><span class="code_endofline">,</span> <span class="code_variable">t2</span><span class="code_endofline">,</span> <span class="code_variable">total_time</span><span class="code_endofline">,</span> <span class="code_variable">time_for_mouth2</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_comment">/* 口2の経路: 加速→等速→減速→戻る */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">t1</span><span class="code_operator">:</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span>  <span class="code_comment">/* 加速時間 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">t2</span><span class="code_operator">:</span> <span class="code_variable">L</span><span class="code_operator">/</span><span class="code_variable">v</span><span class="code_endofline">,</span>      <span class="code_comment">/* 等速移動時間 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">total_time</span><span class="code_operator">:</span> <span class="code_number">2</span><span class="code_operator">·</span><span class="code_variable">t1</span> <span class="code_operator">+</span> <span class="code_variable">t2</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_endofline"><br>
+</span>    <span class="code_comment">/* 特殊相対論的効果 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">time_for_mouth2</span><span class="code_operator">:</span> <span class="code_variable">total_time</span> <span class="code_operator">/</span> <span class="code_function">lorentz_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_endofline"><br>
+</span>    <span class="code_comment">/* 時間差 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">time_for_mouth2</span> <span class="code_operator">−</span> <span class="code_variable">total_time</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o22} \mathop{delta\_ t\_ timemachine}\left( v\mathop{,}{T_{\ensuremath{\mathrm{accel}}}}\mathop{,}L\right) \mathop{:=}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i23)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o23} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i24)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;4.1 ワームホールタイムマシン (Visserモデル):~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[4.1 ワームホールタイムマシン (Visserモデル):\]
+</p>
+<p>
+\[\]\[\tag{%o24} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i25)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  加速時間 T_accel = 1年, 移動距離 L = 1光年~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  加速時間 T\_ accel = 1年, 移動距離 L = 1光年\]
+</p>
+<p>
+\[\]\[\tag{%o25} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i26)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">99</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">T_accel</span><span class="code_operator">:</span> <span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_endofline">,</span>  <span class="code_comment">/* 1年 [s] */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">L</span><span class="code_operator">:</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_endofline">,</span>              <span class="code_comment">/* 1光年 [m] */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">delta_t</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">delta_t_timemachine</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~,2f c: Δt = ~,2e s (~,2f 年)~%&quot;</span><span class="code_endofline">,</span> <span class="code_endofline"><br>
+</span>        <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">delta_t</span><span class="code_endofline">,</span> <span class="code_variable">delta_t</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.50 c: \Delta t = -1.69e+7 s (-0.54 年)
+\]\[  v = 0.90 c: \Delta t = -5.54e+7 s (-1.76 年)
+\]\[  v = 0.99 c: \Delta t = -8.16e+7 s (-2.59 年)\]
+</p>
+<p>
+\[\]\[\tag{%o26} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+4.2 因果ループの形成条件
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i27)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">causal_loop_condition</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">delta_t</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">delta_t</span><span class="code_operator">:</span> <span class="code_function">delta_t_timemachine</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_variable">delta_t</span> <span class="code_endofline">&lt;</span> <span class="code_number">0</span> <span class="code_function">then</span> <span class="code_string">&quot;因果ループ形成可能&quot;</span> <span class="code_function">else</span> <span class="code_string">&quot;因果ループ不可&quot;</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o27} \mathop{causal\_ loop\_ condition}\left( v\mathop{,}{T_{\ensuremath{\mathrm{accel}}}}\mathop{,}L\right) \mathop{:=}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i28)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o28} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i29)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;4.2 因果ループ形成条件:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[4.2 因果ループ形成条件:\]
+</p>
+<p>
+\[\]\[\tag{%o29} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i30)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">9</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">99</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">999</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">T_accel</span><span class="code_operator">:</span> <span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">L</span><span class="code_operator">:</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">condition</span><span class="code_operator">:</span> <span class="code_function">causal_loop_condition</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  v = ~,3f c: ~a~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">condition</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  v = 0.500 c: 因果ループ形成可能
+\]\[  v = 0.900 c: 因果ループ形成可能
+\]\[  v = 0.990 c: 因果ループ形成可能
+\]\[  v = 0.999 c: 因果ループ形成可能\]
+</p>
+<p>
+\[\]\[\tag{%o30} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 5. 自己無撞着条件 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i31)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o31} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i32)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o32} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i33)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;5. 自己無撞着条件 (Novikovの自己無撞着原理)&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"5. 自己無撞着条件 (Novikovの自己無撞着原理)"\]
+</p>
+<p>
+\[\]\[\tag{%o33} "5. 自己無撞着条件 (Novikovの自己無撞着原理)"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i34)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o34} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+5.1 情報の自己無撞着性
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i35)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">self_consistency_equation</span><span class="code_operator">(</span><span class="code_variable">I_out</span><span class="code_endofline">,</span> <span class="code_variable">f</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_function">solve</span><span class="code_operator">(</span><span class="code_variable">I_out</span> <span class="code_operator">=</span> <span class="code_function">f</span><span class="code_operator">(</span><span class="code_variable">I_out</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">I_out</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o35} \mathop{self\_ consistency\_ equation}\left( {I_{\ensuremath{\mathrm{out}}}}\mathop{,}f\right) \mathop{:=}\mathop{block}\left( \mathop{solve}\left( {I_{\ensuremath{\mathrm{out}}}}\mathop{=}\mathop{f}\left( {I_{\ensuremath{\mathrm{out}}}}\right) \mathop{,}{I_{\ensuremath{\mathrm{out}}}}\right) \right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i36)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o36} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i37)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;5.1 情報の自己無撞着方程式:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[5.1 情報の自己無撞着方程式:\]
+</p>
+<p>
+\[\]\[\tag{%o37} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+例1: 線形変換 f(x) = a*x + b
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i38)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">f1</span><span class="code_operator">(</span><span class="code_variable">x</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_variable">a</span><span class="code_operator">·</span><span class="code_variable">x</span> <span class="code_operator">+</span> <span class="code_variable">b</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o38} \mathop{f1}(x)\mathop{:=}a x\mathop{+}b\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i39)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">solutions1</span><span class="code_operator">:</span> <span class="code_function">self_consistency_equation</span><span class="code_operator">(</span><span class="code_variable">I</span><span class="code_endofline">,</span> <span class="code_variable">f1</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{solutions1} \left[ I\mathop{=}\mathop{-}\left( \frac{b}{a\mathop{-}1}\right) \right] \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i40)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  線形変換 f(x) = a*x + b の場合:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  線形変換 f(x) = a*x + b の場合:\]
+</p>
+<p>
+\[\]\[\tag{%o40} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i41)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;    解: ~a~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">solutions1</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[    解: [I = -(b/(a-1))]\]
+</p>
+<p>
+\[\]\[\tag{%o41} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+例2: 2次変換 f(x) = x^2
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i42)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">f2</span><span class="code_operator">(</span><span class="code_variable">x</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_variable">x</span><span class="code_operator">^</span><span class="code_number">2</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o42} \mathop{f2}(x)\mathop{:=}{{x}^{2}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i43)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">solutions2</span><span class="code_operator">:</span> <span class="code_function">self_consistency_equation</span><span class="code_operator">(</span><span class="code_variable">I</span><span class="code_endofline">,</span> <span class="code_variable">f2</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{solutions2} \left[ I\mathop{=}0\mathop{,}I\mathop{=}1\right] \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i44)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  2次変換 f(x) = x^2 の場合:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  2次変換 f(x) = x\textasciicircum2 の場合:\]
+</p>
+<p>
+\[\]\[\tag{%o44} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i45)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;    解: ~a~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">solutions2</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[    解: [I = 0,I = 1]\]
+</p>
+<p>
+\[\]\[\tag{%o45} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+5.2 確率的自己無撞着性
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i46)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">quantum_self_consistency</span><span class="code_operator">(</span><span class="code_variable">p</span><span class="code_endofline">,</span> <span class="code_variable">U</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">p_final</span><span class="code_endofline">,</span> <span class="code_variable">consistency_condition</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">p_final</span><span class="code_operator">:</span> <span class="code_variable">U</span> <span class="code_endofline">.</span> <span class="code_variable">p</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">consistency_condition</span><span class="code_operator">:</span> <span class="code_variable">p_final</span> <span class="code_operator">=</span> <span class="code_variable">p</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o46} \mathop{quantum\_ self\_ consistency}\left( p\mathop{,}U\right) \mathop{:=}\mathop{block}\left( \left[ {p_{\ensuremath{\mathrm{final}}}}\mathop{,}\ensuremath{\mathrm{consistency\_ condition}}\right] \mathop{,}{p_{\ensuremath{\mathrm{final}}}}\mathop{:}U\ensuremath{\mathrm{ . }}p\mathop{,}\ensuremath{\mathrm{consistency\_ condition}}\mathop{:}{p_{\ensuremath{\mathrm{final}}}}\mathop{=}p\right) \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i47)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o47} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i48)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;5.2 確率的自己無撞着性:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[5.2 確率的自己無撞着性:\]
+</p>
+<p>
+\[\]\[\tag{%o48} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i49)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ユニタリ時間発展演算子 U に対する条件:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[  ユニタリ時間発展演算子 U に対する条件:\]
+</p>
+<p>
+\[\]\[\tag{%o49} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i50)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;    U|ψ⟩ = |ψ⟩  (定常状態)~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[    U|\psi ⟩ = |\psi ⟩  (定常状態)\]
+</p>
+<p>
+\[\]\[\tag{%o50} false\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i51)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;    または確率分布が保存~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[    または確率分布が保存\]
+</p>
+<p>
+\[\]\[\tag{%o51} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 6. グラフ描画 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i52)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o52} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i53)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o53} "================================================="\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i54)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;6. グラフ描画&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"6. グラフ描画"\]
+</p>
+<p>
+\[\]\[\tag{%o54} "6. グラフ描画"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i55)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"================================================="\]
+</p>
+<p>
+\[\]\[\tag{%o55} "================================================="\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.1 速度 vs 時間差
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i56)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o56} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i57)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ1: 速度 vs 時間差&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ1: 速度 vs 時間差"\]
+</p>
+<p>
+\[\]\[\tag{%o57} "グラフ1: 速度 vs 時間差"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i59)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v_values</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">01</span> <span class="code_operator">+</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">98</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">50</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">50</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* 0.01c から 0.99c まで */</span><span class="code_endofline"><br>
+</span><span class="code_variable">delta_t_values</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_operator">]</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v\_ values} \]
+</p>
+<p>
+\[\]\[\tag{delta\_ t\_ values} []\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i60)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_variable">v_values</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">T_accel</span><span class="code_operator">:</span> <span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">L</span><span class="code_operator">:</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">delta_t</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">delta_t_timemachine</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">delta_t_values</span><span class="code_operator">:</span> <span class="code_function">append</span><span class="code_operator">(</span><span class="code_variable">delta_t_values</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_variable">delta_t</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o60} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i61)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">v_values</span><span class="code_endofline">,</span> <span class="code_variable">delta_t_values</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;速度 (c単位)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;時間差 Δt (s)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;WH-003: 速度 vs 時間差 (Visserモデル)&quot;</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o61} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.2 因果ループ形成領域
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i62)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o62} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i63)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ2: 因果ループ形成領域&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ2: 因果ループ形成領域"\]
+</p>
+<p>
+\[\]\[\tag{%o63} "グラフ2: 因果ループ形成領域"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i65)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">v_range</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">5</span> <span class="code_operator">+</span> <span class="code_number">0</span><span class="code_endofline">.</span><span class="code_number">49</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  <span class="code_comment">/* 0.5c から 0.99c まで */</span><span class="code_endofline"><br>
+</span><span class="code_variable">L_range</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_number">1e15</span> <span class="code_operator">·</span> <span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">+</span> <span class="code_number">9</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{v\_ range} \]
+</p>
+<p>
+\[\]\[\tag{L\_ range} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i66)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">causal_boundary</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_operator">]</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{causal\_ boundary} []\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i67)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">v_frac</span> <span class="code_function">in</span> <span class="code_variable">v_range</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">T_accel</span><span class="code_operator">:</span> <span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_comment">/* Δt = 0 となる臨界距離 L_critical を計算 */</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">L_critical</span><span class="code_operator">:</span> <span class="code_number">2</span><span class="code_operator">·</span><span class="code_variable">v</span><span class="code_operator">·</span><span class="code_variable">T_accel</span><span class="code_operator">·</span><span class="code_operator">(</span><span class="code_function">lorentz_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span> <span class="code_operator">−</span> <span class="code_number">1</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">causal_boundary</span><span class="code_operator">:</span> <span class="code_function">append</span><span class="code_operator">(</span><span class="code_variable">causal_boundary</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_operator">[</span><span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">L_critical</span><span class="code_operator">/</span><span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_operator">]</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o67} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i68)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">causal_boundary</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;速度 (c単位)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;臨界距離 (光年単位)&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;WH-003: 因果ループ形成臨界条件&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">style</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_variable">lines</span><span class="code_endofline">,</span> <span class="code_number">2</span><span class="code_operator">]</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">color</span><span class="code_endofline">,</span> <span class="code_variable">red</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o68} false\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+6.3 自己無撞着解の可視化
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i69)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\]
+</p>
+<p>
+\[\]\[\tag{%o69} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i70)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;グラフ3: 自己無撞着解の探索&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\mbox{}\\"グラフ3: 自己無撞着解の探索"\]
+</p>
+<p>
+\[\]\[\tag{%o70} "グラフ3: 自己無撞着解の探索"\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i71)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">a_values</span><span class="code_operator">:</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_operator">−</span><span class="code_number">2</span> <span class="code_operator">+</span> <span class="code_number">4</span><span class="code_operator">·</span><span class="code_variable">i</span><span class="code_operator">/</span><span class="code_number">20</span><span class="code_endofline">,</span> <span class="code_variable">i</span><span class="code_endofline">,</span> <span class="code_number">0</span><span class="code_endofline">,</span> <span class="code_number">20</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{a\_ values} \]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i72)	
+  </span></td>
+  <td><span class="input">
+<span class="code_variable">fixed_points</span><span class="code_operator">:</span> <span class="code_operator">[</span><span class="code_operator">]</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{fixed\_ points} []\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i73)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">a</span> <span class="code_function">in</span> <span class="code_variable">a_values</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_variable">a</span> <span class="code_operator">=</span> <span class="code_number">1</span> <span class="code_function">then</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">fp</span><span class="code_operator">:</span> <span class="code_number">2</span>  <span class="code_comment">/* 無限個の解を示すマーカー */</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">)</span> <span class="code_function">else</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">fp</span><span class="code_operator">:</span> <span class="code_number">0</span>  <span class="code_comment">/* 唯一の解 x=0 */</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">fixed_points</span><span class="code_operator">:</span> <span class="code_function">append</span><span class="code_operator">(</span><span class="code_variable">fixed_points</span><span class="code_endofline">,</span> <span class="code_operator">[</span><span class="code_operator">[</span><span class="code_variable">a</span><span class="code_endofline">,</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_variable">fp</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[\tag{%o73} \ensuremath{\mathrm{done}}\]
+</p>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+(%i74)	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">plot2d</span><span class="code_operator">(</span><span class="code_operator">[</span><span class="code_variable">discrete</span><span class="code_endofline">,</span> <span class="code_variable">a_values</span><span class="code_endofline">,</span> <span class="code_function">makelist</span><span class="code_operator">(</span><span class="code_variable">fp</span><span class="code_endofline">,</span> <span class="code_variable">fp</span><span class="code_endofline">,</span> <span class="code_variable">fixed_points</span><span class="code_operator">)</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">xlabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;パラメータ a&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">ylabel</span><span class="code_endofline">,</span> <span class="code_string">&quot;不動点の値&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">title</span><span class="code_endofline">,</span> <span class="code_string">&quot;WH-003: 線形変換の自己無撞着解&quot;</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">[</span><span class="code_variable">y</span><span class="code_endofline">,</span> <span class="code_operator">−</span><span class="code_number">1</span><span class="code_endofline">,</span> <span class="code_number">3</span><span class="code_operator">]</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+<p>
+\[\]\[draw2d-discrete: Expecting a y coordinate; found [-2,0.0]
+\]\[\] \texttt{%error
+ -- an error. To debug this try: debugmode(true);}\[\]
+</p>
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 7. ファイル出力 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;7. 結果の保存&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">with_stdout</span><span class="code_operator">(</span><span class="code_string">&quot;WH003_timemachine_params.txt&quot;</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;v_fraction,lorentz_factor,time_difference_s,causal_loop_possible~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">for</span> <span class="code_variable">i</span><span class="code_operator">:</span><span class="code_number">1</span> <span class="code_function">thru</span> <span class="code_function">length</span><span class="code_operator">(</span><span class="code_variable">v_values</span><span class="code_operator">)</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">v_frac</span><span class="code_operator">:</span> <span class="code_variable">v_values</span><span class="code_operator">[</span><span class="code_variable">i</span><span class="code_operator">]</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">v</span><span class="code_operator">:</span> <span class="code_variable">v_frac</span> <span class="code_operator">·</span> <span class="code_variable">c</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">g</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">lorentz_factor</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">T_accel</span><span class="code_operator">:</span> <span class="code_number">365</span><span class="code_endofline">.</span><span class="code_number">25</span><span class="code_operator">·</span><span class="code_number">24</span><span class="code_operator">·</span><span class="code_number">3600</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">L</span><span class="code_operator">:</span> <span class="code_number">9</span><span class="code_endofline">.</span><span class="code_number">461e15</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">delta_t</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">delta_t_timemachine</span><span class="code_operator">(</span><span class="code_variable">v</span><span class="code_endofline">,</span> <span class="code_variable">T_accel</span><span class="code_endofline">,</span> <span class="code_variable">L</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_variable">possible</span><span class="code_operator">:</span> <span class="code_function">if</span> <span class="code_variable">delta_t</span> <span class="code_endofline">&lt;</span> <span class="code_number">0</span> <span class="code_function">then</span> <span class="code_string">&quot;YES&quot;</span> <span class="code_function">else</span> <span class="code_string">&quot;NO&quot;</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>        <span class="code_endofline"><br>
+</span>        <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;~f,~f,~e,~a~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">v_frac</span><span class="code_endofline">,</span> <span class="code_variable">g</span><span class="code_endofline">,</span> <span class="code_variable">delta_t</span><span class="code_endofline">,</span> <span class="code_variable">possible</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span>    <span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;✅ 計算結果を WH003_timemachine_params.txt に保存しました&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 8. 追加解析: 量子時間トラベル ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;8. 量子時間トラベル解析&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+8.1 量子テレポーテーションとの類似性
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;8.1 量子テレポーテーションとの比較:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ワームホール = 量子もつれの幾何学的実現?~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  ER = EPR 予想 (Maldacena, 2013)~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+8.2 時間方向の量子もつれ
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">temporal_entanglement_entropy</span><span class="code_operator">(</span><span class="code_variable">T</span><span class="code_endofline">,</span> <span class="code_variable">beta</span><span class="code_operator">)</span> <span class="code_operator">:</span><span class="code_operator">=</span> <span class="code_function">block</span><span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_function">if</span> <span class="code_variable">T</span> <span class="code_endofline">&gt;</span> <span class="code_number">0</span> <span class="code_function">then</span> <span class="code_function">log</span><span class="code_operator">(</span><span class="code_number">1</span> <span class="code_operator">+</span> <span class="code_function">exp</span><span class="code_operator">(</span><span class="code_operator">−</span><span class="code_variable">beta</span><span class="code_operator">/</span><span class="code_variable">T</span><span class="code_operator">)</span><span class="code_operator">)</span> <span class="code_function">else</span> <span class="code_number">0</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;8.2 時間的もつれエントロピー:~%&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">for</span> <span class="code_variable">T</span> <span class="code_function">in</span> <span class="code_operator">[</span><span class="code_number">1e-10</span><span class="code_endofline">,</span> <span class="code_number">1e-8</span><span class="code_endofline">,</span> <span class="code_number">1e-6</span><span class="code_operator">]</span> <span class="code_function">do</span> <span class="code_operator">(</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">beta</span><span class="code_operator">:</span> <span class="code_variable">hbar</span><span class="code_operator">/</span><span class="code_operator">(</span><span class="code_variable">kB</span><span class="code_operator">·</span><span class="code_number">300</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_variable">S</span><span class="code_operator">:</span> <span class="code_function">float</span><span class="code_operator">(</span><span class="code_function">temporal_entanglement_entropy</span><span class="code_operator">(</span><span class="code_variable">T</span><span class="code_endofline">,</span> <span class="code_variable">beta</span><span class="code_operator">)</span><span class="code_operator">)</span><span class="code_endofline">,</span><span class="code_endofline"><br>
+</span>    <span class="code_function">printf</span><span class="code_operator">(</span><span class="code_function">true</span><span class="code_endofline">,</span> <span class="code_string">&quot;  T = ~e s: S ≈ ~e~%&quot;</span><span class="code_endofline">,</span> <span class="code_variable">T</span><span class="code_endofline">,</span> <span class="code_variable">S</span><span class="code_operator">)</span><span class="code_endofline"><br>
+</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Text cell -->
+
+
+<div class="comment">
+---------- 9. まとめと結論 ----------
+</div>
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;✅ WH‑003 タイムトラベル解析 完了&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;主要な結果:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. ワームホールタイムマシンの形成条件を導出&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  2. 因果ループが形成される臨界速度・距離を計算&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  3. 自己無撞着条件の数学的定式化&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  4. 量子時間トラベルの可能性を探査&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;生成されたファイル:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. WH003_timemachine_params.txt - 詳細計算データ&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;表示されたグラフ:&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  1. 速度 vs 時間差&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  2. 因果ループ形成臨界条件&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;  3. 自己無撞着解の探索&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;次のステップ: WH-004 (エキゾチック物質生成コスト)&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;または Python連成版 WH-003b で詳細シミュレーション&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+
+<!-- Code cell -->
+
+
+<table><tr><td>
+  <span class="prompt">
+ -->	
+  </span></td>
+  <td><span class="input">
+<span class="code_function">print</span><span class="code_operator">(</span><span class="code_string">&quot;=================================================&quot;</span><span class="code_operator">)</span><span class="code_endofline">;</span>  </span></td>
+</tr></table>
+
+
+ <hr>
+ <p><small> Created with <a href="https://wxMaxima-developers.github.io/wxmaxima/">wxMaxima</a>.</small></p>
+ <small> The source of this Maxima session can be downloaded <a href="WH003_htmlimg/WH003.wxmx">here</a>.</small>
+ </body>
+</html>

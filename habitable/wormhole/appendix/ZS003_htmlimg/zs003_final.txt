@@ -1,0 +1,20 @@
+ZS-003 Results
+==============
+
+Time dilation factors:
+v = 0.1c: gamma = 1.005037815259212
+v = 0.5c: gamma = 1.1547005383792517
+v = 0.9c: gamma = 2.294157338705617
+v = 0.99c: gamma = 7.088812050083374
+v = 0.999c: gamma = 22.36627204212937
+
+4.2 light year trip at v=0.999c:
+Earth time: 1.3267837437049862e+8 seconds
+Earth time: 4.204323978074967 years
+Ship time: 5.932073709940757e+6 seconds
+Ship time: 0.1879760726398952 years
+Time dilation factor: 22.36627204212937
+
+At v=0.999c, ship time is 0.19 years vs 4.2 years Earth time
+For '0 second' arrival, v must be extremely close to c
+Practical interstellar travel requires near-light speeds
