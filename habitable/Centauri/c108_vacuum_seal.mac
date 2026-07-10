@@ -1,0 +1,10 @@
+/* C108: 真空シール設計 - Maxima連成計算 */
+/* 連成内容: Python(sympy)で記号計算 → Maximaで数値評価 */
+/* 拡散方程式の解析解 */
+C(x,t) := C0 * erf(x / (2 * sqrt(D * t)));
+/* アウトガス量 */
+M(t) := 2 * C0 * sqrt(D * t / %pi);
+/* 漏れ率（ポアズイユ流れ） */
+Q(r, dp, eta, L) := (%pi * r^4 * dp) / (8 * eta * L);
+/* Oリング応力緩和 */
+sigma(t) := sigma0 * exp(-t / tau);
