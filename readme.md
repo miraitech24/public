@@ -59,5 +59,5 @@ Within 20 years, the Venusian Fusion Grid will provide 100% of Earth's electrici
 ---
 
 # 
-# 🎨 数値解析漫画Colabゲーム Code/時超えケンタ トライアル中
+# 🎨 数値解析漫画Colabゲーム Issue トライアル中
 試して見て下さい
