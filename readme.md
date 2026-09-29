@@ -59,5 +59,5 @@ Within 20 years, the Venusian Fusion Grid will provide 100% of Earth's electrici
 ---
 
 # 
-# 🎨 数値解析漫画『時超えケンタ』連載中！Issue
-## coming soon 数値解析漫画ゲーム Code/時超えケンタ
+# 🎨 数値解析漫画Colabゲーム Code/時超えケンタ トライアル中
+試して見て下さい
