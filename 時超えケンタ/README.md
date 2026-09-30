@@ -5,7 +5,7 @@
 
 以下のボタンをクリックすると、Google Colabでノートブックが直接開きます。
 
-[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/<YOUR_GITHUB_USERNAME>/<YOUR_REPOSITORY_NAME>/blob/main/<YOUR_NOTEBOOK_NAME>.ipynb)
+[![Open In Colab](https://colab.research.google.com/assets/colab-badge.svg)](https://colab.research.google.com/github/<miraitech24>/<public>/blob/main/<kenta_game_v3>.ipynb)
 
 ---
 
