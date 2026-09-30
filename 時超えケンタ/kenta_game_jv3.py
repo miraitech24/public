@@ -1,9 +1,6 @@
 # =============================================================================
-# 🌌 時超えケンタ (CHRONO KENTA): 4択SFアドベンチャー (JupyterLab 完全対応版)
+# 🌌 時超えケンタ (CHRONO KENTA): 4択SFアドベンチャー (kenta_game_jv3.py - JupyterLab完全対応版)
 # =============================================================================
-# 特徴: widgets.Output() を使用し、JupyterLab の非同期イベント画面非描画問題を完全解決。
-#      GitHubからの画像自動ダウンロード、ステータス動的更新、1ボタン即時選択分岐対応。
-
 import os
 import glob
 import random
@@ -13,10 +10,9 @@ from IPython.display import Image, display, clear_output
 import ipywidgets as widgets
 
 # ------------------------------------------------------------------------------
-# ⚙️ 設定領域 (GitHub Releases & 優先設定)
+# ⚙️ 設定領域 (GitHub Releases URL & ローカル画像検索パス)
 # ------------------------------------------------------------------------------
-GITHUB_ZIP_URL = "https://github.com/miraitech24/public/releases/download/v1.0.0/game_assets.bin" 
-LOCAL_EXTRACT_DIR = "./kenta_manga"
+GITHUB_ZIP_URL = "" 
 
 IMAGE_HASH_MAP = {
     "ep1_page2_manga.png": "data_01.dat",       # プロローグ
@@ -27,9 +23,35 @@ IMAGE_HASH_MAP = {
     "epilogue_page1_manga.png": "data_06.dat"   # エピローグ
 }
 
+IMAGE_EXTS = {".png", ".jpg", ".jpeg", ".webp", ".dat", ".gif"}
+
 # ------------------------------------------------------------------------------
-# 🛠️ 画像自動ダウンロード・解凍ロジック
+# 🛠️ 画像自動検索・パス解決ロジック (JupyterLab %run 対応 & 堅牢化)
 # ------------------------------------------------------------------------------
+def get_search_dirs():
+    try:
+        script_dir = os.path.dirname(os.path.abspath(__file__))
+    except NameError:
+        script_dir = os.getcwd()
+    
+    cwd = os.getcwd()
+    dirs = [
+        os.path.join(script_dir, "kenta_manga"),
+        os.path.join(script_dir, "Kenta_manga"),
+        os.path.join(cwd, "kenta_manga"),
+        os.path.join(cwd, "Kenta_manga"),
+        script_dir,
+        cwd,
+    ]
+    seen = set()
+    unique_dirs = []
+    for d in dirs:
+        norm = os.path.normpath(d)
+        if norm not in seen and os.path.exists(norm):
+            seen.add(norm)
+            unique_dirs.append(norm)
+    return unique_dirs
+
 def download_and_extract_zip():
     if not GITHUB_ZIP_URL:
         return False
@@ -41,13 +63,15 @@ def download_and_extract_zip():
         
         if os.path.exists(zip_save_path) and os.path.getsize(zip_save_path) > 0:
             print("📦 ZIPアーカイブを解凍中...")
-            os.makedirs(LOCAL_EXTRACT_DIR, exist_ok=True)
+            search_dirs = get_search_dirs()
+            extract_target = search_dirs[0] if search_dirs else "./kenta_manga"
+            os.makedirs(extract_target, exist_ok=True)
             with zipfile.ZipFile(zip_save_path, 'r') as zip_ref:
-                zip_ref.extractall(LOCAL_EXTRACT_DIR)
+                zip_ref.extractall(extract_target)
             print("✅ 解凍完了！")
             return True
     except Exception as e:
-        print(f"⚠️ GitHubからのZIP取得失敗: {e}")
+        print(f"⚠️ ZIPダウンロード失敗: {e}")
     return False
 
 def find_image(img_name):
@@ -56,24 +80,51 @@ def find_image(img_name):
 
     filename = os.path.basename(img_name)
     hashed_name = IMAGE_HASH_MAP.get(filename, filename)
-    target_names = list(dict.fromkeys([hashed_name, filename]))
+    target_names = list(dict.fromkeys([filename.lower(), hashed_name.lower()]))
 
-    for name in target_names:
-        if os.path.exists(LOCAL_EXTRACT_DIR):
-            matches = glob.glob(f"{LOCAL_EXTRACT_DIR}/**/{name}", recursive=True)
-            if matches:
-                return matches[0]
+    search_dirs = get_search_dirs()
 
-    if download_and_extract_zip():
-        for name in target_names:
-            matches = glob.glob(f"{LOCAL_EXTRACT_DIR}/**/{name}", recursive=True)
-            if matches:
-                return matches[0]
+    # Pass 1: 完全一致・ケース非依存マッチ
+    for s_dir in search_dirs:
+        for root, _, files in os.walk(s_dir):
+            for f in files:
+                if f.lower() in target_names:
+                    return os.path.join(root, f)
+
+    # Pass 2: ファイル名ステム（拡張子除く）一致チェック
+    stems = []
+    for t_name in [filename, hashed_name]:
+        stem = os.path.splitext(t_name)[0].lower()
+        stems.append(stem)
+        if '_manga' in stem:
+            stems.append(stem.replace('_manga', ''))
+
+    for s_dir in search_dirs:
+        for root, _, files in os.walk(s_dir):
+            for f in files:
+                f_stem, f_ext = os.path.splitext(f.lower())
+                if f_ext in IMAGE_EXTS and f_stem in stems:
+                    return os.path.join(root, f)
+
+    # Pass 3: エピソードプレフィックス一致 (例: ep2, ep3)
+    ep_key = filename.split('_')[0].lower() if '_' in filename else ''
+    if ep_key and ep_key.startswith('ep'):
+        for s_dir in search_dirs:
+            for root, _, files in os.walk(s_dir):
+                for f in files:
+                    f_lower = f.lower()
+                    f_ext = os.path.splitext(f_lower)[1]
+                    if f_ext in IMAGE_EXTS and ep_key in f_lower:
+                        return os.path.join(root, f)
+
+    # Pass 4: GITHUB_ZIP_URL が指定されている場合のみ取得試行
+    if GITHUB_ZIP_URL and download_and_extract_zip():
+        return find_image(img_name)
 
     return None
 
 # ------------------------------------------------------------------------------
-# 📖 シナリオ・ゲームデータベース (EMBEDDED_DB)
+# 📖 シナリオ・ゲームデータベース
 # ------------------------------------------------------------------------------
 EMBEDDED_DB = {
   "scenes": {
@@ -262,20 +313,14 @@ EMBEDDED_DB = {
 }
 
 # ------------------------------------------------------------------------------
-# 🎮 JupyterLab 完全対応型ゲームエンジン (widgets.Output 対応)
+# 🎮 JupyterLab用 ゲームエンジンクラス
 # ------------------------------------------------------------------------------
 class KentaGameEngineJupyterLab:
     def __init__(self):
         self.db = EMBEDDED_DB
-        self.state = {
-            "velocity_c": 0.20,
-            "hull_pct": 100.0,
-            "fuel_tons": 100.0,
-            "crawlers_count": 10,
-            "delay_years": 4.2
-        }
+        self.state = {"velocity_c": 0.20, "hull_pct": 100.0, "fuel_tons": 100.0, "crawlers_count": 10, "delay_years": 4.2}
         self.current_scene_id = "scene_prologue"
-        self.out = widgets.Output()  # JupyterLab非同期描画キャプチャ用ウィジェット
+        self.out = widgets.Output()
 
     def start(self):
         display(self.out)
@@ -291,9 +336,9 @@ class KentaGameEngineJupyterLab:
                 return
 
             print("=" * 70)
-            print("🚀 【時超えケンタ (CHRONO KENTA) - 4択SFアドベンチャー (JupyterLab版)】")
+            print("🚀 【時超えケンタ (CHRONO KENTA) - 4択SFアドベンチャー】")
             print("=" * 70)
-            print(f"  速度: {self.state['velocity_c']:.2f} c | 装甲: {self.state['hull_pct']:.1f}% | 燃料: {self.state['fuel_tons']:.1f} t | クローラー: {self.state['crawlers_count']}機")
+            print(f"  速度: {self.state['velocity_c']:.2f} c | 装甲: {self.state['hull_pct']:.1f}% | 燃料: {self.state['fuel_tons']:.1f} t")
             print("=" * 70)
             print()
 
@@ -307,9 +352,12 @@ class KentaGameEngineJupyterLab:
                 try:
                     display(Image(filename=img_path, width=650))
                 except Exception as e:
-                    print(f"🖼 [コマ画像ロードエラー]: {img_path}")
+                    print(f"🖼 [コマ画像ロードエラー]: {img_path} ({e})")
             else:
-                print(f"🖼 [コマ画像]: {scene['image_file']} (自動ダウンロードまたはローカル配置で表示)")
+                s_dirs = get_search_dirs()
+                print(f"🖼 [コマ画像]: {scene['image_file']} (kenta_manga フォルダ内に見つかりませんでした)")
+                if s_dirs:
+                    print(f"   (検索対象フォルダ: {', '.join(s_dirs)})")
 
             print()
 
@@ -347,37 +395,21 @@ class KentaGameEngineJupyterLab:
 
             if option.get("is_gameover", False):
                 print("💀 通信絶望 - 探査不能となりました。")
-                retry_btn = widgets.Button(
-                    description="🔄 チェックポイントからやり直す",
-                    button_style='danger',
-                    layout=widgets.Layout(width='50%', height='40px', margin='8px')
-                )
+                retry_btn = widgets.Button(description="🔄 チェックポイントからやり直す", button_style='danger')
                 retry_btn.on_click(lambda b: self.reset())
                 display(retry_btn)
             else:
                 self.current_scene_id = option.get("next_scene")
-                next_btn = widgets.Button(
-                    description="▶ 次のステージへ進む",
-                    button_style='success',
-                    layout=widgets.Layout(width='50%', height='40px', margin='8px')
-                )
+                next_btn = widgets.Button(description="▶ 次のステージへ進む", button_style='success')
                 next_btn.on_click(lambda b: self.render())
                 display(next_btn)
 
     def reset(self):
-        self.state = {
-            "velocity_c": 0.20,
-            "hull_pct": 100.0,
-            "fuel_tons": 100.0,
-            "crawlers_count": 10,
-            "delay_years": 4.2
-        }
+        self.state = {"velocity_c": 0.20, "hull_pct": 100.0, "fuel_tons": 100.0, "crawlers_count": 10, "delay_years": 4.2}
         self.current_scene_id = "scene_prologue"
         self.render()
 
-# ------------------------------------------------------------------------------
-# 🚀 実行エントリーポイント
-# ------------------------------------------------------------------------------
+# ゲーム起動
 if __name__ == "__main__":
     engine = KentaGameEngineJupyterLab()
     engine.start()
