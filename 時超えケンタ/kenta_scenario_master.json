@@ -1,0 +1,259 @@
+{
+  "game_title": "時超えケンタ (CHRONO KENTA) - 数値解析SFアドベンチャー",
+  "version": "3.0_master",
+  "asset_packages": {
+    "manga_assets": "https://github.com/miraitech24/public/releases/download/v1.0.0/IKwLZlqe.bin",
+    "sim_assets": "https://github.com/miraitech24/public/releases/download/v1.0.1/CqFSYCpT.bin"
+  },
+  "initial_state": {
+    "velocity_c": 0.2,
+    "hull_pct": 100.0,
+    "fuel_tons": 100.0,
+    "crawlers_count": 10,
+    "delay_years": 4.2
+  },
+  "start_scene_id": "scene_prologue",
+  "scenes": {
+    "scene_prologue": {
+      "chapter_name": "プロローグ: 人類文明の黄昏と水星点火決断",
+      "speaker": "AIケンタ",
+      "description": "西暦2070年代。地球環境の悪化と太陽系資源の枯渇に直面した人類は、4.2光年先のプロキシマ・ケンタウリ系へ物理AI『時超えケンタ』を派遣する決断を下す。",
+      "image_file": "prologue_page1_manga.png",
+      "calc_code": "sim_3002_MER12.py",
+      "physics_context": {
+        "task_id": "#3002",
+        "equation": "F = 2P/c",
+        "laser_power_pw": 1.64
+      },
+      "options": [
+        {
+          "id": "opt_prologue_1",
+          "label": "水星ダイソン環の全出力（1.64PW）を集光し、光速20%への加速レーザーを点火する",
+          "analysis_params": {
+            "task_id": "#3002",
+            "laser_pw": 1.64,
+            "scheme": "laser_acceleration"
+          },
+          "delta": {
+            "velocity_c": 0.2
+          },
+          "result_text": "【物理的帰結】1.64PWのレーザーが深宇宙へ放射され、ケンタ号は目標の0.2cへとスムーズに加速を開始した。",
+          "result_animation": "sim_prologue_laser_acceleration.gif",
+          "next_scene": "scene_ep1",
+          "is_gameover": false
+        },
+        {
+          "id": "opt_prologue_2",
+          "label": "恒星レーザーの照準テストを行わずにいきなりフルパワー点火する",
+          "analysis_params": {
+            "task_id": "#3002",
+            "laser_pw": 1.64,
+            "scheme": "uncalibrated_beam"
+          },
+          "delta": {
+            "hull_pct": -80.0
+          },
+          "result_text": "【物理的帰結】照射ブレが発生！船首セイルの偏心熱膨張により大ダメージを受けた。",
+          "result_animation": "sim_prologue_beam_instability.gif",
+          "next_scene": "scene_ep1",
+          "is_gameover": false
+        }
+      ]
+    },
+    "scene_ep1": {
+      "chapter_name": "第1話「種火」: 1.64PW光圧受光セイルの熱伝導数値解析",
+      "speaker": "AIケンタ",
+      "description": "水星ダイソン環からの1.64PWレーザーを受け、超巨大ミラーセイルを展開して1年間加速。光速の20%（0.2c）へ到達した。セイルの熱負荷限界が迫る！",
+      "image_file": "ep1_page3_manga.png",
+      "calc_code": "sim_C110_MER16.py",
+      "physics_context": {
+        "task_id": "C110",
+        "equation": "∂T/∂t = α ∇²T",
+        "material_limit_kelvin": 3800
+      },
+      "options": [
+        {
+          "id": "opt_ep1_1",
+          "label": "【陰解法（クランク・ニコルソン法）】無制限安定を選択し、能動冷却系と連動させる",
+          "analysis_params": {
+            "task_id": "C110",
+            "scheme": "implicit_crank_nicolson",
+            "cfl_number": 0.5
+          },
+          "delta": {
+            "velocity_c": 0.05,
+            "hull_pct": -2.0,
+            "fuel_tons": -1.0
+          },
+          "result_text": "【数値解析結果】CFL条件に縛られず非定常熱伝導散逸の収束に成功！セイルの熱歪みを極小に抑えて目標速度に到達した。",
+          "result_animation": "sim_ep1_heat_conduction_stable.gif",
+          "next_scene": "scene_ep2",
+          "is_gameover": false
+        },
+        {
+          "id": "opt_ep1_2",
+          "label": "【陽解法（前進 Euler 法）】時間刻み Δt を大きくして一気に計算を進める",
+          "analysis_params": {
+            "task_id": "C110",
+            "scheme": "explicit_euler",
+            "cfl_number": 2.5
+          },
+          "delta": {
+            "velocity_c": 0.01,
+            "hull_pct": -45.0
+          },
+          "result_text": "【数値解析結果】クーラン条件（CFL > 0.5）を超過！メッシュ上で数値的発散（数値爆発）が発生し、セイルの45%が熱蒸発した！",
+          "result_animation": "sim_ep1_cfl_thermal_explosion.gif",
+          "next_scene": "scene_ep2",
+          "is_gameover": false
+        }
+      ]
+    },
+    "scene_ep2": {
+      "chapter_name": "第2話「21年の旅」: 0.2cでの星間物質衝突と電磁シールド戦",
+      "speaker": "AIケンタ",
+      "description": "0.2cの超高速航行中、星間空間の微小塵が相対論的マシンガンとなって船体を襲う！電磁シールドと偏向磁場の最適運用が求められる。",
+      "image_file": "kenta_ep2_page1_manga.png",
+      "calc_code": "sim_HZC13_MER03.py",
+      "physics_context": {
+        "task_id": "HZC-13",
+        "equation": "F = q(E + v × B)",
+        "magnetic_field_tesla": 3.2
+      },
+      "options": [
+        {
+          "id": "opt_ep2_1",
+          "label": "船首の超電導磁場（3.2T）を展開し、ローレンツ力で星間プラズマを偏向散乱させる",
+          "analysis_params": {
+            "task_id": "HZC-13",
+            "scheme": "lorentz_deflection",
+            "field_tesla": 3.2
+          },
+          "delta": {
+            "hull_pct": -2.0,
+            "fuel_tons": -5.0
+          },
+          "result_text": "【物理的帰結】99.9%の荷電粒子を逸らし、最小限の被害で危険地帯を突破！",
+          "result_animation": "sim_ep2_lorentz_plasma_deflection.gif",
+          "next_scene": "scene_ep3",
+          "is_gameover": false
+        },
+        {
+          "id": "opt_ep2_2",
+          "label": "物理装甲バッファ（氷・レゴリス層）のみを前面に押し出して直接受ける",
+          "analysis_params": {
+            "task_id": "HZC-13",
+            "scheme": "physical_ablation_only"
+          },
+          "delta": {
+            "hull_pct": -35.0
+          },
+          "result_text": "【物理的帰結】相対論的微小塵の連続アブレーションにより物理バッファが削り取られ、船体装甲が直接損傷！",
+          "result_animation": "sim_ep2_particle_impact_ablation.gif",
+          "next_scene": "scene_ep3",
+          "is_gameover": false
+        }
+      ]
+    },
+    "scene_ep3": {
+      "chapter_name": "第3話「赤き原野」: プロキシマb着陸と過酷なフレア耐性構築",
+      "speaker": "AIケンタ",
+      "description": "プロキシマbの軌道に到達。赤色矮星の強力なM型フレアが吹き荒れる環境下で自律クローラーの展開を開始する！",
+      "image_file": "kenta_ep3_page3_manga.png",
+      "calc_code": "sim_HZC14_C001.py",
+      "physics_context": {
+        "task_id": "C001",
+        "equation": "Monte Carlo Particle Transport",
+        "flare_type": "M5.5V Superflare"
+      },
+      "options": [
+        {
+          "id": "opt_ep3_1",
+          "label": "潮汐固定された終日帯（ターミネーターゾーン）の12m玄武岩地下洞窟へ降下させる",
+          "analysis_params": {
+            "task_id": "C001",
+            "scheme": "monte_carlo_shielding",
+            "rock_depth_m": 12
+          },
+          "delta": {
+            "crawlers_count": 0
+          },
+          "result_text": "【物理的帰結】12mの天然岩盤がM型スーパーフレアの粒子線を完全遮蔽！安全な地下拠点の建設に成功した。",
+          "result_animation": "sim_ep3_cave_radiation_shielding.gif",
+          "next_scene": "scene_ep4",
+          "is_gameover": false
+        },
+        {
+          "id": "opt_ep3_2",
+          "label": "昼半球の直射地域に着陸させ、太陽光発電の最大化を優先する",
+          "analysis_params": {
+            "task_id": "C001",
+            "scheme": "direct_surface_landing"
+          },
+          "delta": {
+            "crawlers_count": -6
+          },
+          "result_text": "【物理的帰結】M型スーパーフレアの直撃と高エネルギー陽子EMPにより、過半数のクローラー回路が焼失！",
+          "result_animation": "sim_ep3_solar_flare_emp_burn.gif",
+          "next_scene": "scene_ep4",
+          "is_gameover": false
+        }
+      ]
+    },
+    "scene_ep4": {
+      "chapter_name": "第4話「時超えの喉」: 微小ワームホール開通と通信遅延ゼロ達成",
+      "speaker": "AIケンタ",
+      "description": "プロキシマb地下拠点にて負のエネルギープラズマを生成。地球ープロキシマb間の微小ワームホールの固定に挑む！",
+      "image_file": "kenta_ep4_page3_manga.png",
+      "calc_code": "sim_WH01_WH02.py",
+      "physics_context": {
+        "task_id": "WH-01",
+        "equation": "Morris-Thorne Wormhole Metric / Casimir Negative Energy",
+        "throat_radius_nm": 0.5
+      },
+      "options": [
+        {
+          "id": "opt_ep4_1",
+          "label": "カシミール効果を精密制御し、喉半径をサブナノメートルで固定する",
+          "analysis_params": {
+            "task_id": "WH-01",
+            "scheme": "subnanometer_casimir_lock"
+          },
+          "delta": {
+            "delay_years": -4.2
+          },
+          "result_text": "【物理的帰結】超光速インフォメーション・スロートが開通！地球ープロキシマb間の通信遅延が0秒になった！",
+          "result_animation": "sim_ep4_casimir_wormhole_stable.gif",
+          "next_scene": "scene_epilogue",
+          "is_gameover": false
+        },
+        {
+          "id": "opt_ep4_2",
+          "label": "喉の径を人間が通過できるサイズ（直径2m）まで急激に強制拡張する",
+          "analysis_params": {
+            "task_id": "WH-01",
+            "scheme": "forced_human_size_expansion"
+          },
+          "delta": {
+            "hull_pct": -100.0
+          },
+          "result_text": "【物理的帰結】負の質量密度限界を超過！重力崩壊が発生し、ワームホールが暴走消滅した。",
+          "result_animation": "sim_ep4_gravitational_collapse.gif",
+          "next_scene": "scene_epilogue",
+          "is_gameover": true
+        }
+      ]
+    },
+    "scene_epilogue": {
+      "chapter_name": "最終話「時超える絆」: 星間ハビタブルゾーン同盟の発足",
+      "speaker": "ナレーション",
+      "description": "地球とプロキシマbが時空を超えて直結された。ケンタは銀河すべての星間ハビタブルゾーンを守護する存在となり、人類の新しい未来が始まった！",
+      "image_file": "kenta_epilogue_page1_manga.png",
+      "calc_code": "???.mac",
+      "physics_context": {
+        "status": "Type II Civilization Bridge Established"
+      },
+      "options": []
+    }
+  }
+}
