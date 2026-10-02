@@ -1,57 +1,69 @@
 #!/usr/bin/env python3
 """
-【HZC-14 / C001】第3話: 12m岩盤モンテカルロ放射線遮蔽 & M型フレアEMP
+【HZC-14 / C001】第3話: 3D 12m岩盤モンテカルロ遮蔽 & 3D M型フレアEMP
 """
 import os
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
-def run_simulation(out_dir="./sim_assets"):
+def run_simulation(out_dir="./sim_assets_3d"):
     os.makedirs(out_dir, exist_ok=True)
     
-    # 1. 安定時: モンテカルロ岩盤遮蔽 (HZC-14)
-    fig, ax = plt.subplots(figsize=(6, 3.5), dpi=100)
+    # 1. 安定: 3Dモンテカルロ岩盤粒子衰退
+    fig = plt.figure(figsize=(6, 4), dpi=80)
     fig.patch.set_facecolor('#0f172a')
-    ax.set_facecolor('#1e293b')
-    ax.set_xlim(0, 15)
-    ax.set_ylim(0, 100)
-    ax.axvline(x=12, color='#f59e0b', linestyle='--', label='Cave Rock (12m)')
-    ax.set_title("Task HZC-14: Monte Carlo Radiation Shielding", color='#f8fafc')
-    ax.tick_params(colors='#94a3b8')
-    ax.legend(loc='upper right')
+    ax = fig.add_subplot(111, projection='3d')
+    
+    def update_3d_mc(frame):
+        ax.clear()
+        ax.set_facecolor('#1e293b')
+        ax.set_title("Task HZC-14: 3D Monte Carlo Cave Shielding (12m)", color='#f8fafc', fontsize=10)
+        
+        n_p = 80
+        x = np.random.exponential(scale=3.0, size=n_p)
+        y = np.random.uniform(-5, 5, size=n_p)
+        z = np.random.uniform(-5, 5, size=n_p)
+        
+        yb, zb = np.mgrid[-5:5:8j, -5:5:8j]
+        xb = 12 * np.ones_like(yb)
+        ax.plot_surface(xb, yb, zb, color='#78716c', alpha=0.3)
+        
+        ax.scatter(x[x < 12], y[x < 12], z[x < 12], c='#38bdf8', s=12, alpha=0.7)
+        ax.set_xlim(0, 15)
+        ax.set_ylim(-5, 5)
+        ax.set_zlim(-5, 5)
+        ax.view_init(elev=20, azim=frame*4)
 
-    x_vals = np.linspace(0, 15, 50)
-    line, = ax.plot([], [], color='#38bdf8', lw=2)
-
-    def update_m(frame):
-        y_vals = 100 * np.exp(-0.4 * x_vals[:frame])
-        line.set_data(x_vals[:frame], y_vals)
-        return line,
-
-    ani_s = animation.FuncAnimation(fig, update_m, frames=50, interval=50)
-    ani_s.save(os.path.join(out_dir, "sim_ep3_cave_radiation_shielding.gif"), writer='pillow')
+    ani1 = animation.FuncAnimation(fig, update_3d_mc, frames=22, interval=80)
+    ani1.save(os.path.join(out_dir, "sim_ep3_cave_radiation_shielding_3d.gif"), writer='pillow')
     plt.close()
 
-    # 2. 失敗時: フレアEMP損壊 (C001)
-    fig, ax = plt.subplots(figsize=(6, 3.5), dpi=100)
+    # 2. 失敗: 3D EMP波動
+    fig = plt.figure(figsize=(6, 4), dpi=80)
     fig.patch.set_facecolor('#0f172a')
-    ax.set_facecolor('#1e293b')
-    ax.set_xlim(0, 10)
-    ax.set_ylim(-10, 10)
-    ax.set_title("Task C001: M-Flare EMP Circuit Damage", color='#f8fafc')
-    ax.tick_params(colors='#94a3b8')
+    ax = fig.add_subplot(111, projection='3d')
 
-    t_vals = np.linspace(0, 10, 100)
-    line_emp, = ax.plot([], [], color='#f87171', lw=1.5)
+    x = np.linspace(-3, 3, 20)
+    y = np.linspace(-3, 3, 20)
+    X, Y = np.meshgrid(x, y)
 
-    def update_emp(frame):
-        sig = np.sin(5 * t_vals[:frame]) * np.exp(t_vals[:frame]*0.2)
-        line_emp.set_data(t_vals[:frame], sig)
-        return line_emp,
+    def update_3d_emp(frame):
+        ax.clear()
+        ax.set_facecolor('#1e293b')
+        ax.set_title("Task C001: 3D M-Flare EMP Wavefront Damage", color='#f8fafc', fontsize=10)
+        
+        R = np.sqrt(X**2 + Y**2) + 0.1
+        Z = np.sin(3 * R - frame * 0.4) * np.exp(frame * 0.05)
+        ax.plot_surface(X, Y, Z, cmap='plasma')
+        ax.set_zlim(-3, 3)
+        ax.view_init(elev=30, azim=frame*5)
 
-    ani_e = animation.FuncAnimation(fig, update_emp, frames=50, interval=40)
-    ani_e.save(os.path.join(out_dir, "sim_ep3_solar_flare_emp_burn.gif"), writer='pillow')
+    ani2 = animation.FuncAnimation(fig, update_3d_emp, frames=20, interval=80)
+    ani2.save(os.path.join(out_dir, "sim_ep3_solar_flare_emp_burn_3d.gif"), writer='pillow')
     plt.close()
 
 if __name__ == "__main__":

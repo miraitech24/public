@@ -1,54 +1,57 @@
 #!/usr/bin/env python3
 """
-【C110 / MER-16】第1話: 非定常熱伝導方程式 & CFL条件超過熱爆発シミュレーション
+【C110 / MER-16】第1話: 3D非定常熱伝導方程式 & 3D CFL拡散限界爆発
 """
 import os
 import numpy as np
+import matplotlib
+matplotlib.use('Agg')
 import matplotlib.pyplot as plt
+from mpl_toolkits.mplot3d import Axes3D
 import matplotlib.animation as animation
 
-def run_simulation(out_dir="./sim_assets"):
+def run_simulation(out_dir="./sim_assets_3d"):
     os.makedirs(out_dir, exist_ok=True)
     
-    # 1. 安定時: クランク・ニコルソン陰解法
-    fig, ax = plt.subplots(figsize=(6, 3.5), dpi=100)
+    # 1. 安定: 3D陰解法熱放熱
+    fig = plt.figure(figsize=(6, 4), dpi=80)
     fig.patch.set_facecolor('#0f172a')
-    ax.set_facecolor('#1e293b')
-    x = np.linspace(0, 1, 50)
-    u = np.sin(np.pi * x)
-    line, = ax.plot(x, u, color='#38bdf8', lw=2, label='Temp T(x)')
-    ax.set_ylim(0, 1.2)
-    ax.set_title("Task C110: Crank-Nicolson Scheme (Stable)", color='#f8fafc')
-    ax.tick_params(colors='#94a3b8')
-    ax.grid(True, alpha=0.3)
+    ax = fig.add_subplot(111, projection='3d')
+    
+    x = np.linspace(-2, 2, 20)
+    y = np.linspace(-2, 2, 20)
+    X, Y = np.meshgrid(x, y)
 
-    def update_c_n(frame):
-        u_curr = u * (0.93 ** frame)
-        line.set_ydata(u_curr)
-        return line,
+    def update_3d_heat(frame):
+        ax.clear()
+        ax.set_facecolor('#1e293b')
+        ax.set_title("Task C110: 3D Heat Diffusion (Crank-Nicolson)", color='#f8fafc', fontsize=10)
+        Z = np.exp(-(X**2 + Y**2)) * np.exp(-0.1 * frame)
+        ax.plot_surface(X, Y, Z, cmap='coolwarm', vmin=0, vmax=1)
+        ax.set_zlim(0, 1.2)
+        ax.view_init(elev=30, azim=frame*4)
 
-    ani_s = animation.FuncAnimation(fig, update_c_n, frames=30, interval=80)
-    ani_s.save(os.path.join(out_dir, "sim_ep1_heat_conduction_stable.gif"), writer='pillow')
+    ani1 = animation.FuncAnimation(fig, update_3d_heat, frames=20, interval=80)
+    ani1.save(os.path.join(out_dir, "sim_ep1_heat_conduction_stable_3d.gif"), writer='pillow')
     plt.close()
 
-    # 2. 失敗時: 陽解法 CFL>0.5 数値的発散 (MER-16)
-    fig, ax = plt.subplots(figsize=(6, 3.5), dpi=100)
+    # 2. 失敗: 3D CFL爆発
+    fig = plt.figure(figsize=(6, 4), dpi=80)
     fig.patch.set_facecolor('#0f172a')
-    ax.set_facecolor('#1e293b')
-    line_exp, = ax.plot(x, u, color='#f87171', lw=1.8, label='CFL Explosion')
-    ax.set_ylim(-5, 5)
-    ax.set_title("Task MER-16: Explicit Euler CFL > 0.5 Explosion", color='#f8fafc')
-    ax.tick_params(colors='#94a3b8')
-    ax.grid(True, alpha=0.3)
+    ax = fig.add_subplot(111, projection='3d')
 
-    def update_cfl(frame):
-        noise = ((-1.4) ** frame) * 0.05 * np.sin(10 * np.pi * x)
-        u_curr = u * (0.9 ** frame) + noise
-        line_exp.set_ydata(u_curr)
-        return line_exp,
+    def update_3d_cfl(frame):
+        ax.clear()
+        ax.set_facecolor('#1e293b')
+        ax.set_title("Task MER-16: 3D Explicit Euler CFL Explosive Divergence", color='#f8fafc', fontsize=10)
+        noise = ((-1.3) ** frame) * 0.05 * np.sin(5*X) * np.cos(5*Y)
+        Z = np.exp(-(X**2 + Y**2)) + noise
+        ax.plot_surface(X, Y, Z, cmap='inferno')
+        ax.set_zlim(-3, 3)
+        ax.view_init(elev=30, azim=frame*5)
 
-    ani_e = animation.FuncAnimation(fig, update_cfl, frames=20, interval=100)
-    ani_e.save(os.path.join(out_dir, "sim_ep1_cfl_thermal_explosion.gif"), writer='pillow')
+    ani2 = animation.FuncAnimation(fig, update_3d_cfl, frames=18, interval=90)
+    ani2.save(os.path.join(out_dir, "sim_ep1_cfl_thermal_explosion_3d.gif"), writer='pillow')
     plt.close()
 
 if __name__ == "__main__":
